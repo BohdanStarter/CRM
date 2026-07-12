@@ -49,7 +49,11 @@ INSTALLED_APPS = [
     "crispy_bootstrap5",
     "django.contrib.humanize",
     "django_extensions",
+    "accounts.apps.AccountsConfig",
+    "products.apps.ProductsConfig",
 ]
+
+AUTH_USER_MODEL = 'accounts.User'
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
