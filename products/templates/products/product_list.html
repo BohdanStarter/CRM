@@ -1,0 +1,30 @@
+{% extends "base_menu.html" %}
+{% block content %}
+<h1>Products List</h1>
+<p>
+{% if product_list %}
+<ul>
+  {% for product in product_list %}
+    <li>
+        <a href="{% url 'products:product_detail'  product.pk %}">{{ product.name }}</a> | {{ product.description }} | ${{ product.price }} | {{ product.status }}
+    </li>
+  {% endfor %}
+</ul>
+{% else %}
+  <p>There are no products in the database.</p>
+{% endif %}
+</p>
+<p>
+{% if user.is_superuser %}
+<a href="{% url 'products:product_create'%}">Create new product </a>
+{% endif %}
+</p>
+<p>
+{% if user.is_authenticated %}
+    <strong><p> Logged in as {{ user.username }}</p> </strong>
+{% else %}
+    <strong><p>Not currently logged in.</p></strong>
+{% endif %}
+</p>
+
+{% endblock %}

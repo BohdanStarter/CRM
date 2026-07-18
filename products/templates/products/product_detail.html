@@ -1,0 +1,49 @@
+{% extends "base_menu.html" %}
+{% load humanize %} <!-- https://docs.djangoproject.com/en/5.2/ref/contrib/humanize -->
+{% block content %}
+<span style="float: right;">
+Created at: {{ product.created_at|naturaltime }}
+<br>
+Updated at: {{ product.updated_at|naturaltime }}
+</span>
+<h1><strong>Name:</strong> {{ product.name }}</h1>
+<p>
+<strong>Description:</strong>
+<br>
+{{ product.description }}
+</p>
+
+<p>
+<strong>Category:</strong>
+<br>
+{{ product.category }}
+</p>
+
+<p>
+<strong>Status:</strong>
+<br>
+{{ product.status }}
+</p>
+
+<p>
+<strong>Billing:</strong>
+<br>
+{{ product.billing_type }}
+</p>
+
+<p>
+<strong>Price:</strong>
+<br>
+${{ product.price }}
+</p>
+
+<p>
+</p>
+<p>
+<a href="{% url 'products:all' %}">Back to all products</a>
+{% if user.is_superuser %}
+| <a href="{% url 'products:product_update' product.pk %}">Edit product</a>
+| <a href="{% url 'products:product_delete' product.pk %}">Delete product</a>
+{% endif %}
+</p>
+{% endblock %}

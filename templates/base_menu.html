@@ -1,0 +1,33 @@
+{% extends 'base_bootstrap.html' %}
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'products:all' %}">CRM System</a>
+    <ul class="navbar-nav">
+      {% url 'products:all' as x %}
+      <li {% if request.get_full_path == x %}class="active"{% endif %}>
+          <a class="nav-link" href="{% url 'products:all' %}" role="button">CRM</a></li>
+    </ul>
+    <ul class="navbar-nav">
+      {% if user.is_authenticated %}
+      <li class="nav-item dropdown">
+         <a class="nav-link dropdown-toggle" href="#" id="rightnavDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            {{ user.username }}<b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="rightnavDropdown">
+            <li>
+                <form action="{% url 'logout' %}" method="post" class="d-inline">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{% url 'products:all' %}">
+                    <button class="dropdown-item btn btn-link" type="submit">Logout</button>
+                </form>
+            </li>
+        </ul>
+       </li>
+       {% else %}
+       <li class="nav-item"><a class="nav-link" href="{% url 'login' %}?next={% url 'products:all' %}">Login</a></li>
+       {% endif %}
+    </ul>
+  </div>
+</nav>
+{% endblock %}

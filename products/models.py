@@ -42,6 +42,16 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    # Shows up in the admin list
+    # Shows in admin
     def __str__(self):
         return self.name
+
+
+
+
+
+
+
+
+
+
