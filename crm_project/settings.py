@@ -45,12 +45,14 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 
     # Added apps
+    "phonenumber_field",
     "crispy_forms",
     "crispy_bootstrap5",
     "django.contrib.humanize",
     "django_extensions",
     "accounts.apps.AccountsConfig",
     "products.apps.ProductsConfig",
+    "customers.apps.CustomersConfig",
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
@@ -78,6 +80,7 @@ TEMPLATES = [
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
+                "django.template.context_processors.debug",
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",

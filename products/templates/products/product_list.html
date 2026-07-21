@@ -1,12 +1,22 @@
 {% extends "base_menu.html" %}
 {% block content %}
 <h1>Products List</h1>
+<div style="float:right">
+<form>
+  <input type="text" placeholder="Search.." name="search" {% if search %} value="{{ search }}" {% endif %} >
+  <button type="submit"><i class="fa fa-search"></i></button>
+  <a href="{% url 'products:all' %}"><i class="fa fa-undo"></i></a>
+</form>
+</div>
 <p>
 {% if product_list %}
 <ul>
   {% for product in product_list %}
     <li>
-        <a href="{% url 'products:product_detail'  product.pk %}">{{ product.name }}</a> | {{ product.description }} | ${{ product.price }} | {{ product.status }}
+        <a href="{% url 'products:product_detail'  product.pk %}">{{ product.name }}</a>
+        | {{ product.description }}
+        | ${{ product.price }}
+        | {{ product.status }}
     </li>
   {% endfor %}
 </ul>

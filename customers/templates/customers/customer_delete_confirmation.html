@@ -1,0 +1,10 @@
+{% extends "base_menu.html" %}
+{% block content %}
+<h1>Delete Customer</h1>
+<p>Are you sure you want to delete this customer: <br><strong>Name: </strong>{{ customer.full_name }} <br><strong>Email: </strong> {{ customer.email }}?</p>
+<form action="" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Delete">
+    <input type="submit" value="Cancel" onclick="window.location.href='{% url 'customers:customer_detail' customer.pk %}';return false;">
+</form>
+{% endblock %}

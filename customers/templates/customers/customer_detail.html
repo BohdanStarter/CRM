@@ -1,0 +1,36 @@
+{% extends "base_menu.html" %}
+{% load humanize %} <!-- https://docs.djangoproject.com/en/5.2/ref/contrib/humanize -->
+{% block content %}
+<span style="float: right;">
+Created at: {{ customer.created_at|naturaltime }}
+<br>
+Updated at: {{ customer.updated_at|naturaltime }}
+</span>
+<h1><strong>Name:</strong> {{ customer.full_name }}</h1>
+<p>
+<strong>Email:</strong>
+<br>
+{{ customer.email }}
+</p>
+
+<p>
+<strong>Phone number:</strong>
+<br>
+{{ customer.phone_number }}
+</p>
+
+<p>
+<strong>Status:</strong>
+<br>
+{{ customer.status }}
+</p>
+<br>
+<br>
+<p>
+<a href="{% url 'customers:all' %}">Back to all customers</a>
+{% if user.is_superuser %}
+| <a href="{% url 'customers:customer_update' customer.pk %}">Edit customer</a>
+| <a href="{% url 'customers:customer_delete' customer.pk %}">Delete customer</a>
+{% endif %}
+</p>
+{% endblock %}

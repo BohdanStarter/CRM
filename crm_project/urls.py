@@ -29,7 +29,7 @@ urlpatterns = [
     path("accounts/", include("accounts.urls")),
     # path("", include("home.urls")),
     path("products/", include("products.urls")),
-
+    path("customers/", include("customers.urls")),
 ]
 
 

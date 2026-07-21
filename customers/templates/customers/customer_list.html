@@ -1,0 +1,32 @@
+{% extends "base_menu.html" %}
+{% block content %}
+<h1>Customers List</h1>
+<p>
+{% if customer_list %}
+<ul>
+  {% for customer in customer_list %}
+    <li>
+        <a href="{% url 'customers:customer_detail'  customer.pk %}">{{ customer.full_name }}</a>
+        | {{ customer.email }}
+        | {{ customer.status }}
+    </li>
+  {% endfor %}
+</ul>
+{% else %}
+  <p>There are no customers in the database.</p>
+{% endif %}
+</p>
+<p>
+{% if user.is_superuser %}
+<a href="{% url 'customers:customer_create'%}">Add a new Customer</a>
+{% endif %}
+</p>
+<p>
+{% if user.is_authenticated %}
+    <strong><p> Logged in as {{ user.username }}. Role: {{ user.role }}</p> </strong>
+{% else %}
+    <strong><p>Not currently logged in.</p></strong>
+{% endif %}
+</p>
+
+{% endblock %}
