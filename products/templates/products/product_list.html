@@ -31,7 +31,7 @@
 </p>
 <p>
 {% if user.is_authenticated %}
-    <strong><p> Logged in as {{ user.username }}</p> </strong>
+    <strong><p> Logged in as {{ user.username }}. Role: {{ user.role }}</p> </strong>
 {% else %}
     <strong><p>Not currently logged in.</p></strong>
 {% endif %}

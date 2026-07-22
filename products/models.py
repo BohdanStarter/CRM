@@ -41,10 +41,10 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=8, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
     # Shows in admin
     def __str__(self):
-        return self.name
+        license_name = str(self.name) + ' ' + str(self.billing_type)
+        return license_name
 
 
 

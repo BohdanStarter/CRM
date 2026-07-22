@@ -1,0 +1,42 @@
+{% extends "base_menu.html" %}
+{% load humanize %} <!-- https://docs.djangoproject.com/en/5.2/ref/contrib/humanize -->
+{% block content %}
+<span style="float: right;">
+Created at: {{ license.created_at|naturaltime }}
+<br>
+Updated at: {{ license.updated_at|naturaltime }}
+</span>
+<h1><strong>Name:</strong> {{ license.customer.full_name }}</h1>
+<p>
+<strong>Email:</strong>
+<br>
+{{ license.customer.email }}
+</p>
+
+<p>
+<strong>Product:</strong>
+<br>
+{{ license.product.name }}
+</p>
+
+<p>
+<strong>License Key:</strong>
+<br>
+{{ license.license_key }}
+</p>
+
+<p>
+<strong>Status:</strong>
+<br>
+{{ license.status }}
+</p>
+<br>
+<br>
+<p>
+<a href="{% url 'licenses:all' %}">Back to all licenses</a>
+{% if user.is_superuser %}
+| <a href="{% url 'licenses:license_update' license.pk %}">Edit license</a>
+| <a href="{% url 'licenses:license_delete' license.pk %}">Delete license</a>
+{% endif %}
+</p>
+{% endblock %}

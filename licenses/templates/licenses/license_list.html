@@ -1,0 +1,32 @@
+{% extends "base_menu.html" %}
+{% block content %}
+<h1>Licenses List</h1>
+<p>
+{% if license_list %}
+<ul>
+  {% for license in license_list %}
+    <li>
+        <a href="{% url 'licenses:license_detail'  license.pk %}">{{ license.customer.full_name }}</a>
+        | {{ license.product.name }}
+        | {{ license.license_key }}
+    </li>
+  {% endfor %}
+</ul>
+{% else %}
+  <p>There are no licenses in the database.</p>
+{% endif %}
+</p>
+<p>
+{% if user.is_superuser %}
+<a href="{% url 'licenses:license_create'%}">Add a new License</a>
+{% endif %}
+</p>
+<p>
+{% if user.is_authenticated %}
+    <strong><p> Logged in as {{ user.username }}. Role: {{ user.role }}</p> </strong>
+{% else %}
+    <strong><p>Not currently logged in.</p></strong>
+{% endif %}
+</p>
+
+{% endblock %}

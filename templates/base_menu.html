@@ -13,6 +13,10 @@
             <li class="nav-item">
               <a class="nav-link {% if request.path == customers %}active{% endif %}" href="{% url 'customers:all' %}" role="button">Customers</a>
             </li>
+            {% url 'licenses:all' as licenses %}
+            <li class="nav-item">
+              <a class="nav-link {% if request.path == licenses %}active{% endif %}" href="{% url 'licenses:all' %}" role="button">Licenses</a>
+            </li>
         </ul>
         <ul class="navbar-nav">
           {% if user.is_authenticated %}

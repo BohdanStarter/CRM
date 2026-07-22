@@ -1,0 +1,14 @@
+{% extends "base_menu.html" %}
+{% block content %}
+<h1>Delete License</h1>
+<p>Are you sure you want to delete this license:
+<br><strong>Name: </strong>{{ license.customer.full_name }}
+<br><strong>Email: </strong> {{ license.customer.email }}
+<br><strong>Product: </strong> {{ license.product.name }}?
+</p>
+<form action="" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Delete">
+    <input type="submit" value="Cancel" onclick="window.location.href='{% url 'licenses:license_detail' license.pk %}';return false;">
+</form>
+{% endblock %}
