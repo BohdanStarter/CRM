@@ -24,6 +24,22 @@ Updated at: {{ customer.updated_at|naturaltime }}
 <br>
 {{ customer.status }}
 </p>
+
+{% if customer.licenses.all %}
+<p>
+<strong>Licenses:</strong></p>
+<ul style="list-style-type: ' - '">
+    {% for license in customer.licenses.all %}
+    <li><a href="{% url 'licenses:license_detail' license.pk%}">{{ license.product.name }} {{ license.product.billing_type }}</a>
+    | {{ license.status }}
+    | {{ license.license_key }}</li>
+    {% endfor %}
+</ul>
+{% else %}
+    This customer has no related licenses.
+</p>
+{% endif %}
+
 <br>
 <br>
 <p>
