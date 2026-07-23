@@ -9,6 +9,7 @@ from customers.forms import CustomerForm
 
 class CustomerListView(LoginRequiredMixin, ListView):
     model = Customer
+    paginate_by = 10
 
 
 class CustomerDetailView(LoginRequiredMixin, DetailView):

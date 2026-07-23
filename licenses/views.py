@@ -10,6 +10,7 @@ from licenses.forms import LicenseForm
 
 class LicenseListView(LoginRequiredMixin, ListView):
     model = License
+    paginate_by = 10
     def get_queryset(self):
         search = self.request.GET.get("search")
         if search:
@@ -24,6 +25,7 @@ class LicenseListView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         search = self.request.GET.get("search")
         context['search'] = search
+        context['search_link'] = f"&search={search}" if search else ""
         return context
 
 

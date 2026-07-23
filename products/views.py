@@ -7,6 +7,7 @@ from products.forms import ProductForm
 
 class ProductListView(LoginRequiredMixin, ListView):
     model = Product
+    paginate_by = 10
     # template_name = "products/product_list.html"
     def get_queryset(self):
         search = self.request.GET.get("search")
@@ -21,6 +22,7 @@ class ProductListView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         search = self.request.GET.get("search")
         context['search'] = search
+        context['search_link'] = f"&search={search}" if search else ""
         return context
 
 class ProductDetailView(LoginRequiredMixin, DetailView):

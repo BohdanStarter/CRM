@@ -9,9 +9,9 @@
 </form>
 </div>
 <p>
-{% if product_list %}
+{% if page_obj %}
 <ul>
-  {% for product in product_list %}
+  {% for product in page_obj %}
     <li>
         <a href="{% url 'products:product_detail'  product.pk %}">{{ product.name }}</a>
         | {{ product.description }}
@@ -20,6 +20,23 @@
     </li>
   {% endfor %}
 </ul>
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1{{search_link}}">&laquo; First</a>
+                <a href="?page={{ page_obj.previous_page_number }}{{ search_link }}"> Previous </a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}{{ search_link }}"> Next </a>
+                <a href="?page={{ page_obj.paginator.num_pages }}{{ search_link }}"> Last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
 {% else %}
   <p>There are no products in the database.</p>
 {% endif %}
