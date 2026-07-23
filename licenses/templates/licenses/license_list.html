@@ -1,14 +1,21 @@
 {% extends "base_menu.html" %}
 {% block content %}
 <h1>Licenses List</h1>
+<div style="float:right">
+<form>
+  <input type="text" placeholder="Search.." name="search" {% if search %} value="{{ search }}" {% endif %} >
+  <button type="submit"><i class="fa fa-search"></i></button>
+  <a href="{% url 'licenses:all' %}"><i class="fa fa-undo"></i></a>
+</form>
+</div>
 <p>
 {% if license_list %}
 <ul>
   {% for license in license_list %}
     <li>
-        <a href="{% url 'licenses:license_detail'  license.pk %}">{{ license.customer.full_name }}</a>
-        | {{ license.product.name }}
-        | {{ license.license_key }}
+        <strong>Customer Name:</strong> <a href="{% url 'licenses:license_detail'  license.pk %}">{{ license.customer.full_name }}</a>
+        | <strong>Product Name:</strong> {{ license.product.name }}
+        | <strong>Expired:</strong> {% if license.is_expired %} Yes {% else %} No {% endif %}
     </li>
   {% endfor %}
 </ul>

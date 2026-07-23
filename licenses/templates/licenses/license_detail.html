@@ -7,6 +7,7 @@ Created at: {{ license.created_at|naturaltime }}
 Updated at: {{ license.updated_at|naturaltime }}
 </span>
 <h1><strong>Name:</strong> {{ license.customer.full_name }}</h1>
+
 <p>
 <strong>Email:</strong>
 <br>
@@ -26,10 +27,18 @@ Updated at: {{ license.updated_at|naturaltime }}
 </p>
 
 <p>
+<strong>Expiration date:</strong>
+<br>
+{{ license.expiration_date }}
+</p>
+
+<p>
 <strong>Status:</strong>
 <br>
 {{ license.status }}
 </p>
+
+
 <br>
 <br>
 <p>

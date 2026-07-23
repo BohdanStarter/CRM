@@ -8,6 +8,6 @@ class LicenseForm(forms.ModelForm):
         fields = [
             "customer",
             "product",
+            "note",
             "status",
-            "expiration_date",
         ]
