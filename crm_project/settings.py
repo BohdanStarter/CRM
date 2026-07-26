@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     "products.apps.ProductsConfig",
     "customers.apps.CustomersConfig",
     "licenses.apps.LicensesConfig",
+    "home.apps.HomeConfig",
 ]
 
 AUTH_USER_MODEL = 'accounts.User'

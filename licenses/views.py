@@ -3,10 +3,9 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
+from accounts.mixins import BlockSalesMixin, BlockSupportMixin
 from licenses.models import License
 from licenses.forms import LicenseForm
-# Create your views here.
-
 
 class LicenseListView(LoginRequiredMixin, ListView):
     model = License
@@ -18,6 +17,7 @@ class LicenseListView(LoginRequiredMixin, ListView):
             query.add(Q(customer__email__icontains=search), Q.OR)
             query.add(Q(note__icontains=search), Q.OR)
             query.add(Q(product__name__icontains=search), Q.OR)
+            query.add(Q(status__iexact=search), Q.OR)
             return License.objects.filter(query).distinct().order_by("-updated_at")
         else:
             return License.objects.all().order_by("-updated_at")
@@ -33,19 +33,19 @@ class LicenseListView(LoginRequiredMixin, ListView):
 class LicenseDetailView(LoginRequiredMixin, DetailView):
     model = License
 
-class LicenseCreateView(LoginRequiredMixin, CreateView):
+class LicenseCreateView(LoginRequiredMixin, BlockSalesMixin, BlockSupportMixin, CreateView):
     model = License
     form_class = LicenseForm
     template_name = "licenses/license_form.html"
     success_url = reverse_lazy("licenses:all")
 
-class LicenseUpdateView(LoginRequiredMixin, UpdateView):
+class LicenseUpdateView(LoginRequiredMixin, BlockSalesMixin, BlockSupportMixin, UpdateView):
     model = License
     form_class = LicenseForm
     template_name = "licenses/license_form.html"
     success_url = reverse_lazy("licenses:all")
 
-class LicenseDeleteView(LoginRequiredMixin, DeleteView):
+class LicenseDeleteView(LoginRequiredMixin, BlockSalesMixin, BlockSupportMixin, DeleteView):
     model = License
     template_name = "licenses/license_delete_confirmation.html"
     success_url = reverse_lazy("licenses:all")

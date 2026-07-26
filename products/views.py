@@ -2,6 +2,7 @@ from django.views.generic import CreateView, UpdateView, DeleteView, ListView, D
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.db.models import Q
+from accounts.mixins import BlockSalesMixin, BlockSupportMixin
 from products.models import Product
 from products.forms import ProductForm
 
@@ -29,19 +30,19 @@ class ProductDetailView(LoginRequiredMixin, DetailView):
     model = Product
     # template_name = "products/product_detail.html"
 
-class ProductCreateView(LoginRequiredMixin, CreateView):
+class ProductCreateView(LoginRequiredMixin, BlockSalesMixin, BlockSupportMixin, CreateView):
     model = Product
     form_class = ProductForm
     template_name = "products/product_form.html"
     success_url = reverse_lazy("products:all")
 
-class ProductUpdateView(LoginRequiredMixin, UpdateView):
+class ProductUpdateView(LoginRequiredMixin, BlockSalesMixin, BlockSupportMixin, UpdateView):
     model = Product
     form_class = ProductForm
     template_name = "products/product_form.html"
     success_url = reverse_lazy("products:all")
 
-class ProductDeleteView(LoginRequiredMixin, DeleteView):
+class ProductDeleteView(LoginRequiredMixin, BlockSalesMixin, BlockSupportMixin, DeleteView):
     model = Product
     template_name = "products/product_delete_confirmation.html"
     success_url = reverse_lazy("products:all")

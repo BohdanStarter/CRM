@@ -43,7 +43,7 @@
 {% endif %}
 </p>
 <p>
-{% if user.is_superuser %}
+{% if user.is_superuser or user.role == "Admin" %}
 <a href="{% url 'licenses:license_create'%}">Add a new License</a>
 {% endif %}
 </p>
