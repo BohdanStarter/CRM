@@ -41,7 +41,7 @@ ${{ product.price }}
 </p>
 <p>
 <a href="{% url 'products:all' %}">Back to all products</a>
-{% if user.is_superuser or user.role == "Admin" %}
+{% if user.is_superuser or user.is_admin %}
 | <a href="{% url 'products:product_update' product.pk %}">Edit product</a>
 | <a href="{% url 'products:product_delete' product.pk %}">Delete product</a>
 {% endif %}

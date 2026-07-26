@@ -44,10 +44,10 @@ Updated: {{ customer.updated_at|naturaltime }}
 <br>
 <p>
 <a href="{% url 'customers:all' %}">Back to all customers</a>
-{% if user.role == "Admin" or user.is_superuser %}
+{% if user.is_admin or user.is_superuser %}
 | <a href="{% url 'customers:customer_update' customer.pk %}">Edit customer</a>
 | <a href="{% url 'customers:customer_delete' customer.pk %}">Delete customer</a>
-{% elif user.groups == "Support" %}
+{% elif user.is_support %}
 | <a href="{% url 'customers:customer_update' customer.pk %}">Edit customer</a>
 {% endif %}
 </p>

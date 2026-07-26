@@ -18,6 +18,21 @@ class User(AbstractUser):
         default=SALES,
     )
 
+    @property
+    def is_admin(self):
+        if self.role == self.ADMIN or self.role == "ADMIN":
+            return True
+        else:
+            return False
+
+    @property
+    def is_support(self):
+        return self.role == self.SUPPORT
+
+    @property
+    def is_sales(self):
+        return self.role == self.SALES
+
     def save(self, *args, **kwargs):
         is_new = self.pk is None
         super().save(*args, **kwargs)

@@ -43,7 +43,7 @@ Updated: {{ license.updated_at|naturaltime }}
 <br>
 <p>
 <a href="{% url 'licenses:all' %}">Back to all licenses</a>
-{% if user.is_superuser or user.role == "Admin" %}
+{% if user.is_superuser or user.is_admin %}
 | <a href="{% url 'licenses:license_update' license.pk %}">Edit license</a>
 | <a href="{% url 'licenses:license_delete' license.pk %}">Delete license</a>
 {% endif %}

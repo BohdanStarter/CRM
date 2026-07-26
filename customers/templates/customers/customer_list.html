@@ -34,7 +34,7 @@
 {% endif %}
 </p>
 <p>
-{% if user.is_superuser or user.role == "Admin" or user.role == "Support" %}
+{% if user.is_superuser or user.is_admin or user.is_support %}
 <a href="{% url 'customers:customer_create'%}">Add a new Customer</a>
 {% endif %}
 </p>

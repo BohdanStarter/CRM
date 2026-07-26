@@ -42,7 +42,7 @@
 {% endif %}
 </p>
 <p>
-{% if user.is_superuser or user.role == "Admin" %}
+{% if user.is_superuser or user.is_admin %}
 <a href="{% url 'products:product_create'%}">Create new product </a>
 {% endif %}
 </p>

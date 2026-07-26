@@ -13,7 +13,7 @@
         <h5 class="card-title">Customers:</h5>
         <p class="card-text"><strong>{% if customer_amount != 0 %} {{ customer_amount }} {% else %} No customers yet.{% endif %}</strong></p>
         {% if customer_amount == 0 %}
-            {% if user in user_admin or user in user_support %}
+            {% if user.is_admin or user.is_support %}
                 <a href="{% url 'customers:customer_create' %}" class="btn btn-primary">Add a Customer</a>
             {% endif %}
         {% else %}
@@ -27,7 +27,7 @@
       <div class="card-body">
         <h5 class="card-title">Products:</h5>
         <p class="card-text"><strong>{% if product_amount != 0 %} {{ product_amount }} {% else %} No products yet.{% endif %}</strong></p>
-        {% if product_amount == 0 and user in user_admin %}
+        {% if product_amount == 0 and user.is_admin %}
             <a href="{% url 'products:product_create' %}" class="btn btn-primary">Add a Product</a>
         {% else %}
             <a href="{% url 'products:all' %}" class="btn btn-primary">Go to Products</a>
@@ -40,7 +40,7 @@
       <div class="card-body">
         <h5 class="card-title">Licenses:</h5>
         <p class="card-text"><strong>{% if license_amount != 0 %} {{ license_amount }} {% else %} No licenses yet. {% endif %}</strong></p>
-        {% if license_amount == 0 and user in user_admin %}
+        {% if license_amount == 0 and user.is_admin %}
             <a href="{% url 'licenses:license_create' %}" class="btn btn-primary">Add a License</a>
         {% else %}
             <a href="{% url 'licenses:all' %}" class="btn btn-primary">Go to Licenses</a>

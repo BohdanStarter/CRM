@@ -6,7 +6,6 @@ from datetime import timedelta
 from licenses.models import License
 from customers.models import Customer
 from products.models import Product
-from accounts.models import User
 from django.db.models import Q
 # Create your views here.
 
@@ -16,13 +15,11 @@ class HomeTemplateView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # Calculate expiration date
+        # Calculate date helpers
         now = timezone.now()
         future_limit = now + timedelta(days=14)
         past_limit = now - timedelta(days=14)
 
-        context['user_admin'] = User.objects.filter(Q(role='ADMIN') | Q(role=User.ADMIN))
-        context['user_support'] = User.objects.filter(role=User.SUPPORT)
         context['license_amount'] = License.objects.count()
         context['customer_amount'] = Customer.objects.count()
         context['product_amount'] = Product.objects.count()
