@@ -51,14 +51,17 @@ class License(models.Model):
         super().save(*args, **kwargs)
 
     def clean(self):
-        if self.customer.status == Customer.INACTIVE:
-            raise ValidationError(
-                {"customer": gl("Customer should have an active status.")}
-            )
-        if self.product.status == Product.INACTIVE or self.product.status == Product.ARCHIVED:
-            raise ValidationError(
-                {"product": gl("Product should have an active status.")}
-            )
+        if self.pk:
+            pass
+        else:
+            if self.customer.status == Customer.INACTIVE:
+                raise ValidationError(
+                    {"customer": gl("Customer should have an active status.")}
+                )
+            if self.product.status == Product.INACTIVE or self.product.status == Product.ARCHIVED:
+                raise ValidationError(
+                    {"product": gl("Product should have an active status.")}
+                )
 
     def generate_unique_license_key(self):
         while True:

@@ -29,9 +29,9 @@ class LicenseUpdateForm(forms.ModelForm):
         ]
     def __init__(self, *args, **kwargs):
         super(LicenseUpdateForm, self).__init__(*args, **kwargs)
-        self.fields["customer"].widget.attrs.update(disabled=True)
-        self.fields["product"].widget.attrs.update(disabled=True)
-
+        self.fields["customer"].disabled = True
+        self.fields["product"].disabled = True
+        # CHANGE IT
 
 
 
