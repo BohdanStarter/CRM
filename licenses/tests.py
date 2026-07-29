@@ -1,4 +1,5 @@
 from django.test import TestCase
+from django.core.exceptions import ValidationError
 from dateutil.relativedelta import relativedelta
 from django.utils import timezone
 from datetime import timedelta
@@ -14,8 +15,24 @@ class LicenseTestCase(TestCase):
         test_customer = Customer.objects.create(
             full_name="Test Customer",
             email="test@gmail.com",
-            status=Customer.ACTIVE
+            status=Customer.ACTIVE,
         )
+
+        Customer.objects.create(
+            full_name="Test Inactive Customer",
+            email="test_inactive@gmail.com",
+            status=Customer.INACTIVE,
+        )
+
+        Product.objects.create(
+            name="VPN Inactive",
+            description="VPN protection for your devices. (Inactive)",
+            category=Product.SECURITY,
+            billing_type=Product.ANNUALLY,
+            status=Product.INACTIVE,
+            price="10"
+        )
+
         product_lifetime = Product.objects.create(
             name="VPN Unlimited",
             description="VPN protection for your devices",
@@ -132,6 +149,36 @@ class LicenseTestCase(TestCase):
         self.assertTrue(bool(re.fullmatch(key_structure, lifetime.license_key)))
         self.assertTrue(bool(re.fullmatch(key_structure, year.license_key)))
         self.assertTrue(bool(re.fullmatch(key_structure, month.license_key)))
+
+    def test_license_validation(self):
+        product_lifetime = Product.objects.get(name="VPN Unlimited")
+        inactive_product = Product.objects.get(name="VPN Inactive")
+
+        active_customer = Customer.objects.get(status=Customer.ACTIVE)
+        inactive_customer = Customer.objects.get(status=Customer.INACTIVE)
+
+        with self.assertRaises(ValidationError):
+            license = License(customer=inactive_customer)
+            license.full_clean()
+
+        with self.assertRaises(ValidationError):
+            license = License(customer=active_customer, product=inactive_product)
+            license.full_clean()
+
+
+        lifetime = License.objects.get(product=product_lifetime)
+        self.assertFalse(lifetime.full_clean())
+
+        # License with inactive product/customer can still be changed
+
+        product_lifetime.status = Product.INACTIVE
+        product_lifetime.save()
+
+        lifetime.status = License.INACTIVE
+        lifetime.save()
+
+        self.assertFalse(lifetime.full_clean())
+
 
 
 
