@@ -1,8 +1,10 @@
 from django import forms
 from licenses.models import License
+from customers.models import Customer
+from products.models import Product
 
 
-class LicenseForm(forms.ModelForm):
+class LicenseCreateForm(forms.ModelForm):
     class Meta:
         model = License
         fields = [
@@ -11,3 +13,26 @@ class LicenseForm(forms.ModelForm):
             "note",
             "status",
         ]
+    def __init__(self, *args, **kwargs):
+        super(LicenseCreateForm, self).__init__(*args, **kwargs)
+        self.fields["customer"].queryset = Customer.objects.filter(status__exact=Customer.ACTIVE)
+        self.fields["product"].queryset = Product.objects.filter(status__exact=Product.ACTIVE)
+
+class LicenseUpdateForm(forms.ModelForm):
+    class Meta:
+        model = License
+        fields = [
+            "customer",
+            "product",
+            "note",
+            "status",
+        ]
+    def __init__(self, *args, **kwargs):
+        super(LicenseUpdateForm, self).__init__(*args, **kwargs)
+        self.fields["customer"].widget.attrs.update(disabled=True)
+        self.fields["product"].widget.attrs.update(disabled=True)
+
+
+
+
+

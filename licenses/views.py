@@ -5,7 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from accounts.mixins import BlockSalesMixin, BlockSupportMixin
 from licenses.models import License
-from licenses.forms import LicenseForm
+from licenses.forms import LicenseCreateForm, LicenseUpdateForm
 
 class LicenseListView(LoginRequiredMixin, ListView):
     model = License
@@ -35,13 +35,13 @@ class LicenseDetailView(LoginRequiredMixin, DetailView):
 
 class LicenseCreateView(LoginRequiredMixin, BlockSalesMixin, BlockSupportMixin, CreateView):
     model = License
-    form_class = LicenseForm
+    form_class = LicenseCreateForm
     template_name = "licenses/license_form.html"
     success_url = reverse_lazy("licenses:all")
 
 class LicenseUpdateView(LoginRequiredMixin, BlockSalesMixin, BlockSupportMixin, UpdateView):
     model = License
-    form_class = LicenseForm
+    form_class = LicenseUpdateForm
     template_name = "licenses/license_form.html"
     success_url = reverse_lazy("licenses:all")
 

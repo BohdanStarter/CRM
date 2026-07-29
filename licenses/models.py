@@ -1,5 +1,7 @@
 import secrets
 import string
+from django.utils.translation import gettext_lazy as gl
+from django.core.exceptions import ValidationError
 from dateutil.relativedelta import relativedelta
 from django.utils import timezone
 from django.db import models
@@ -46,10 +48,17 @@ class License(models.Model):
         if self.expiration_date is None and self.product.billing_type != Product.LIFETIME:
             self.expiration_date = self.expiration()
 
-        # if self.is_expired:
-        #     self.status = self.EXPIRED
-
         super().save(*args, **kwargs)
+
+    def clean(self):
+        if self.customer.status == Customer.INACTIVE:
+            raise ValidationError(
+                {"customer": gl("Customer should have an active status.")}
+            )
+        if self.product.status == Product.INACTIVE or self.product.status == Product.ARCHIVED:
+            raise ValidationError(
+                {"product": gl("Product should have an active status.")}
+            )
 
     def generate_unique_license_key(self):
         while True:
