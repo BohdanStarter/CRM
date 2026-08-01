@@ -207,7 +207,14 @@ class LicenseTestCase(TestCase):
         self.assertTrue(form.fields["customer"].disabled)
         self.assertTrue(form.fields["product"].disabled)
 
+        form = LicenseUpdateForm(instance=license, data={"note": "This is a test for a form", "status": License.SUSPENDED})
 
+        self.assertTrue(form.is_valid())
+
+        form.save()
+
+        self.assertEqual(license.note, "This is a test for a form")
+        self.assertEqual(license.status, License.SUSPENDED)
 
 
 
