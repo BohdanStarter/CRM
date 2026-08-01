@@ -7,6 +7,8 @@ import re
 from licenses.models import License
 from products.models import Product
 from customers.models import Customer
+from licenses.forms import LicenseCreateForm
+from licenses.forms import LicenseUpdateForm
 # Create your tests here.
 
 
@@ -179,9 +181,31 @@ class LicenseTestCase(TestCase):
 
         self.assertFalse(lifetime.full_clean())
 
+    def test_license_create_form(self):
+        product_lifetime = Product.objects.get(name="VPN Unlimited")
+        inactive_product = Product.objects.get(name="VPN Inactive")
 
+        active_customer = Customer.objects.get(status=Customer.ACTIVE)
+        inactive_customer = Customer.objects.get(status=Customer.INACTIVE)
 
+        form = LicenseCreateForm()
 
+        self.assertTrue(active_customer in form.fields["customer"].queryset)
+        self.assertFalse(inactive_customer in form.fields["customer"].queryset)
+
+        self.assertTrue(product_lifetime in form.fields["product"].queryset)
+        self.assertFalse(inactive_product in form.fields["product"].queryset)
+
+    def test_license_update_form(self):
+        product_lifetime = Product.objects.get(name="VPN Unlimited")
+        license = License.objects.get(product=product_lifetime)
+        form = LicenseUpdateForm(instance=license)
+
+        self.assertIn("note", form.fields)
+        self.assertIn("status", form.fields)
+
+        self.assertTrue(form.fields["customer"].disabled)
+        self.assertTrue(form.fields["product"].disabled)
 
 
 
