@@ -1,57 +1,131 @@
 {% extends "base_menu.html" %}
 {% block content %}
-<h1>Products List</h1>
-<div style="float:right">
-<form>
-  <input type="text" placeholder="Search.." name="search" {% if search %} value="{{ search }}" {% endif %} >
-  <button type="submit"><i class="fa fa-search"></i></button>
-  <a href="{% url 'products:all' %}"><i class="fa fa-undo"></i></a>
-</form>
-</div>
-<p>
-{% if page_obj %}
-<ul>
-  {% for product in page_obj %}
-    <li>
-        <a href="{% url 'products:product_detail'  product.pk %}">{{ product.name }}</a>
-        | {{ product.description }}
-        | ${{ product.price }}
-        | {{ product.status }}
-    </li>
-  {% endfor %}
-</ul>
-    <div class="pagination">
-        <span class="step-links">
-            {% if page_obj.has_previous %}
-                <a href="?page=1{{search_link}}">&laquo; First</a>
-                <a href="?page={{ page_obj.previous_page_number }}{{ search_link }}"> Previous </a>
-            {% endif %}
+<div class="container mt-4">
 
-            <span class="current">
-                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-            </span>
-
-            {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}{{ search_link }}"> Next </a>
-                <a href="?page={{ page_obj.paginator.num_pages }}{{ search_link }}"> Last &raquo;</a>
-            {% endif %}
-        </span>
+  <div class="row align-items-center g-3 mb-4">
+    <div class="col-md-4">
+      <h1 class="h2 mb-0 text-dark">Products List</h1>
     </div>
-{% else %}
-  <p>There are no products in the database.</p>
-{% endif %}
-</p>
-<p>
-{% if user.is_superuser or user.is_admin %}
-<a href="{% url 'products:product_create'%}">Create new product </a>
-{% endif %}
-</p>
-<p>
-{% if user.is_authenticated %}
-    <strong><p> Logged in as {{ user.username }}. Role: {{ user.role }}</p> </strong>
-{% else %}
-    <strong><p>Not currently logged in.</p></strong>
-{% endif %}
-</p>
 
+    <div class="col-md-5">
+      <form method="get" class="input-group">
+        <input type="text" class="form-control" placeholder="Search products..." name="search" {% if search %} value="{{ search }}" {% endif %} aria-label="Search products">
+        <button class="btn btn-outline-secondary" type="submit">
+          <i class="fa fa-search"></i>
+        </button>
+        {% if search %}
+          <a href="{% url 'products:all' %}" class="btn btn-outline-danger" title="Clear search">
+            <i class="fa fa-undo"></i>
+          </a>
+        {% endif %}
+      </form>
+    </div>
+
+    <div class="col-md-3 text-md-end">
+      {% if user.is_superuser or user.is_admin %}
+        <a href="{% url 'products:product_create' %}" class="btn btn-success w-100 w-md-auto">
+          <i class="fa fa-plus"></i> Create New Product
+        </a>
+      {% endif %}
+    </div>
+  </div>
+
+  {% if page_obj %}
+    <div class="card shadow-sm mb-4">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th scope="col" class="ps-4">Product Name</th>
+              <th scope="col">Description</th>
+              <th scope="col">Price</th>
+              <th scope="col" class="pe-4 text-end">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for product in page_obj %}
+              <tr>
+                <td class="ps-4">
+                  <a href="{% url 'products:product_detail' product.pk %}" class="fw-semibold text-decoration-none">
+                    {{ product.name }}
+                  </a>
+                </td>
+                <td class="text-muted text-truncate" style="max-width: 250px;">{{ product.description }}</td>
+                <td class="fw-medium">${{ product.price }}</td>
+                <td class="pe-4 text-end">
+                  {% if product.status == 'Active' or product.status == 'Available' %}
+                    <span class="badge bg-success-subtle text-success px-2.5 py-1.5 rounded-pill">Active</span>
+                  {% elif product.status == 'Inactive' or product.status == 'Out of Stock' %}
+                    <span class="badge bg-danger-subtle text-danger px-2.5 py-1.5 rounded-pill">Inactive</span>
+                  {% else %}
+                    <span class="badge bg-secondary-subtle text-secondary px-2.5 py-1.5 rounded-pill">{{ product.status }}</span>
+                  {% endif %}
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <nav aria-label="Product page navigation" class="d-flex justify-content-between align-items-center mb-4">
+      <span class="text-muted small">
+        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+      </span>
+
+      <ul class="pagination pagination-sm mb-0">
+        {% if page_obj.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?page=1{{ search_link }}" aria-label="First">&laquo; First</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}{{ search_link }}">Previous</a>
+          </li>
+        {% else %}
+          <li class="page-item disabled"><span class="page-link">&laquo; First</span></li>
+          <li class="page-item disabled"><span class="page-link">Previous</span></li>
+        {% endif %}
+
+        <li class="page-item active" aria-current="page">
+          <span class="page-link">{{ page_obj.number }}</span>
+        </li>
+
+        {% if page_obj.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}{{ search_link }}">Next</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{{ search_link }}" aria-label="Last">Last &raquo;</a>
+          </li>
+        {% else %}
+          <li class="page-item disabled"><span class="page-link">Next</span></li>
+          <li class="page-item disabled"><span class="page-link">Last &raquo;</span></li>
+        {% endif %}
+      </ul>
+    </nav>
+
+  {% else %}
+    <div class="alert alert-info text-center py-4 shadow-sm" role="alert">
+      <p class="mb-0 fw-medium">There are no products in the database.</p>
+    </div>
+  {% endif %}
+
+  <div class="card bg-light border-0 py-3 px-4 rounded-3 mt-5">
+    <div class="d-flex justify-content-between align-items-center">
+      {% if user.is_authenticated %}
+        <div class="text-secondary small">
+          Logged in as: <strong class="text-dark">{{ user.username }}</strong>
+        </div>
+        <div class="badge bg-primary-subtle text-primary px-3 py-2">
+          Role: {{ user.role }}
+        </div>
+      {% else %}
+        <div class="text-danger small fw-medium">
+          Not currently logged in.
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+</div>
 {% endblock %}

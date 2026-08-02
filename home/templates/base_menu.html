@@ -1,0 +1,76 @@
+{% extends 'base_bootstrap.html' %}
+
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm py-2.5">
+  <div class="container-fluid">
+
+
+    <a class="navbar-brand fw-bold tracking-tight text-white d-flex align-items-center gap-2" href="{% url 'home:all' %}">
+      <i class="fa fa-th-large text-primary"></i> CRM System
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 fw-medium gap-lg-1">
+            {% url 'products:all' as products_url %}
+            <li class="nav-item">
+              <a class="nav-link px-3 {% if request.path|slice:":10" == "/products/" or request.path == products_url %}active{% endif %}" href="{{ products_url }}">
+                <i class="fa fa-cubes me-1.5 fs-7"></i> Products
+              </a>
+            </li>
+
+            {% url 'customers:all' as customers_url %}
+            <li class="nav-item">
+              <a class="nav-link px-3 {% if request.path|slice:":11" == "/customers/" or request.path == customers_url %}active{% endif %}" href="{{ customers_url }}">
+                <i class="fa fa-users me-1.5 fs-7"></i> Customers
+              </a>
+            </li>
+
+            {% url 'licenses:all' as licenses_url %}
+            <li class="nav-item">
+              <a class="nav-link px-3 {% if request.path|slice:":10" == "/licenses/" or request.path == licenses_url %}active{% endif %}" href="{{ licenses_url }}">
+                <i class="fa fa-key me-1.5 fs-7"></i> Licenses
+              </a>
+            </li>
+        </ul>
+        <ul class="navbar-nav align-items-lg-center">
+          {% if user.is_authenticated %}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle bg-secondary bg-opacity-25 px-3 py-1.5 rounded text-white fw-semibold d-flex align-items-center gap-2" href="#" id="rightnavDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="fa fa-user-circle-o fs-5 text-muted"></i> {{ user.username }}
+                </a>
+              <ul class="dropdown-menu dropdown-menu-end border-0 shadow mt-2 p-1.5" aria-labelledby="rightnavDropdown">
+                <li>
+                  <div class="dropdown-header text-secondary px-3 py-1 bg-transparent border-0 small text-uppercase tracking-wider fw-bold">
+                    Role: {{ user.role|default:"User" }}
+                  </div>
+                </li>
+                <li><hr class="dropdown-divider my-1.5"></li>
+                <li>
+                  <form action="{% url 'logout' %}" method="post" class="m-0 p-0">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{% url 'home:all' %}">
+                    <button class="dropdown-item rounded text-danger fw-medium d-flex align-items-center gap-2" type="submit">
+                      <i class="fa fa-sign-out text-danger opacity-75"></i> Sign Out
+                    </button>
+                  </form>
+                </li>
+              </ul>
+            </li>
+          {% else %}
+            <li class="nav-item">
+              <a class="btn btn-primary btn-sm px-4 py-1.5 font-weight-medium rounded" href="{% url 'login' %}?next={% url 'home:all' %}">
+                <i class="fa fa-sign-in me-1"></i> Account Log In
+              </a>
+            </li>
+          {% endif %}
+        </ul>
+
+    </div>
+  </div>
+</nav>
+{% endblock %}

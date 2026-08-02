@@ -1,54 +1,158 @@
 {% extends "base_menu.html" %}
-{% load humanize %} <!-- https://docs.djangoproject.com/en/5.2/ref/contrib/humanize -->
+{% load humanize %}
+
 {% block content %}
-<span style="float: right;">
-Created at: {{ customer.created_at }}
-<br>
-Updated: {{ customer.updated_at|naturaltime }}
-</span>
-<h1><strong>Name:</strong> {{ customer.full_name }}</h1>
-<p>
-<strong>Email:</strong>
-<br>
-{{ customer.email }}
-</p>
+<div class="container mt-4">
 
-<p>
-<strong>Phone number:</strong>
-<br>
-{{ customer.phone_number }}
-</p>
+  <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+    <div>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-1">
+          <li class="breadcrumb-item"><a href="{% url 'customers:all' %}" class="text-decoration-none">Customers</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Customer Details</li>
+        </ol>
+      </nav>
+      <h1 class="h2 mb-0 text-dark">
+        <span class="text-muted fw-light">Customer:</span> {{ customer.full_name }}
+      </h1>
+    </div>
 
-<p>
-<strong>Status:</strong>
-<br>
-{{ customer.status }}
-</p>
+    <div>
+      <a href="{% url 'customers:all' %}" class="btn btn-outline-secondary btn-sm">
+        <i class="fa fa-arrow-left me-1"></i> Back to All Customers
+      </a>
+    </div>
+  </div>
 
-{% if customer.licenses.all %}
-<p>
-<strong>Licenses:</strong></p>
-<ul style="list-style-type: ' - '">
-    {% for license in customer.licenses.all %}
-    <li><a href="{% url 'licenses:license_detail' license.pk%}">{{ license.product.name }} {{ license.product.billing_type }}</a>
-    | {{ license.status }}
-    | {{ license.license_key }}</li>
-    {% endfor %}
-</ul>
-{% else %}
-    This customer has no related licenses.
-</p>
-{% endif %}
+  <div class="row g-4">
 
-<br>
-<br>
-<p>
-<a href="{% url 'customers:all' %}">Back to all customers</a>
-{% if user.is_admin or user.is_superuser %}
-| <a href="{% url 'customers:customer_update' customer.pk %}">Edit customer</a>
-| <a href="{% url 'customers:customer_delete' customer.pk %}">Delete customer</a>
-{% elif user.is_support %}
-| <a href="{% url 'customers:customer_update' customer.pk %}">Edit customer</a>
-{% endif %}
-</p>
+    <div class="col-lg-8">
+      <div class="d-flex flex-column gap-4">
+
+        <div class="card shadow-sm">
+          <div class="card-header bg-light py-3">
+            <h5 class="card-title mb-0 text-secondary small text-uppercase fw-bold tracking-wider">Profile Overview</h5>
+          </div>
+          <div class="card-body p-0">
+            <table class="table table-striped-columns align-middle mb-0">
+              <tbody>
+                <tr>
+                  <th scope="row" class="ps-4 text-muted fw-medium" style="width: 30%;">Email Address</th>
+                  <td class="pe-4 text-dark">{{ customer.email }}</td>
+                </tr>
+                <tr>
+                  <th scope="row" class="ps-4 text-muted fw-medium">Phone Number</th>
+                  <td class="pe-4 text-dark fw-medium">{{ customer.phone_number }}</td>
+                </tr>
+                <tr>
+                  <th scope="row" class="ps-4 text-muted fw-medium">Account Status</th>
+                  <td class="pe-4">
+                    {% if customer.status == 'Active' %}
+                      <span class="badge bg-success-subtle text-success px-2.5 py-1.5 rounded-pill">Active</span>
+                    {% elif customer.status == 'Inactive' %}
+                      <span class="badge bg-danger-subtle text-danger px-2.5 py-1.5 rounded-pill">Inactive</span>
+                    {% else %}
+                      <span class="badge bg-secondary-subtle text-secondary px-2.5 py-1.5 rounded-pill">{{ customer.status }}</span>
+                    {% endif %}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card shadow-sm">
+          <div class="card-header bg-light py-3">
+            <h5 class="card-title mb-0 text-secondary small text-uppercase fw-bold tracking-wider">Assigned Product Licenses</h5>
+          </div>
+          <div class="card-body p-0">
+            {% if customer.licenses.all %}
+              <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0 small">
+                  <thead class="table-light text-muted">
+                    <tr>
+                      <th scope="col" class="ps-4">Product Mapping</th>
+                      <th scope="col">Status</th>
+                      <th scope="col" class="pe-4 font-monospace text-end">License Token Key</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for license in customer.licenses.all %}
+                      <tr>
+                        <td class="ps-4">
+                          <a href="{% url 'licenses:license_detail' license.pk %}" class="fw-semibold text-decoration-none">
+                            {{ license.product.name }} <span class="text-muted fw-normal">({{ license.product.billing_type }})</span>
+                          </a>
+                        </td>
+                        <td>
+                          {% if license.status == 'Active' %}
+                            <span class="badge bg-success-subtle text-success px-2 py-1 rounded-pill">Active</span>
+                          {% else %}
+                            <span class="badge bg-secondary-subtle text-secondary px-2 py-1 rounded-pill">{{ license.status }}</span>
+                          {% endif %}
+                        </td>
+                        <td class="pe-4 text-end">
+                          <code class="bg-light border rounded px-1.5 py-0.5 text-danger font-monospace fs-7">{{ license.license_key }}</code>
+                        </td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            {% else %}
+              <div class="p-4 text-center text-muted small">
+                <i class="fa fa-info-circle me-1"></i> This customer has no active related product licenses.
+              </div>
+            {% endif %}
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="col-lg-4">
+      <div class="d-flex flex-column gap-4">
+
+        <div class="card shadow-sm">
+          <div class="card-header bg-light py-3">
+            <h5 class="card-title mb-0 text-secondary small text-uppercase fw-bold tracking-wider">System Metadata</h5>
+          </div>
+          <div class="card-body py-3">
+            <ul class="list-group list-group-flush small">
+              <li class="list-group-item d-flex justify-content-between align-items-center px-0 bg-transparent">
+                <span class="text-muted">Created at:</span>
+                <span class="fw-medium text-dark">{{ customer.created_at }}</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center px-0 bg-transparent">
+                <span class="text-muted">Last updated:</span>
+                <span class="fw-medium text-dark" title="{{ customer.updated_at }}">{{ customer.updated_at|naturaltime }}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {% if user.is_admin or user.is_superuser or user.is_support %}
+          <div class="card border-warning-subtle bg-warning-subtle bg-opacity-10 shadow-sm">
+            <div class="card-body p-4">
+              <h6 class="fw-bold text-dark mb-2">Management Controls</h6>
+              <p class="text-muted small mb-3">Permissions allowed based on your active team deployment role status profile matrix mappings.</p>
+              <div class="d-grid gap-2">
+                <a href="{% url 'customers:customer_update' customer.pk %}" class="btn btn-warning d-flex align-items-center justify-content-center gap-2">
+                  <i class="fa fa-edit"></i> Edit Profile Records
+                </a>
+                {% if user.is_admin or user.is_superuser %}
+                  <a href="{% url 'customers:customer_delete' customer.pk %}" class="btn btn-outline-danger d-flex align-items-center justify-content-center gap-2">
+                    <i class="fa fa-trash"></i> Permanently Delete Customer
+                  </a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        {% endif %}
+
+      </div>
+    </div>
+  </div>
+
+</div>
 {% endblock %}

@@ -1,51 +1,120 @@
 {% extends "base_menu.html" %}
-{% load humanize %} <!-- https://docs.djangoproject.com/en/5.2/ref/contrib/humanize -->
+{% load humanize %}
+
 {% block content %}
-<span style="float: right;">
-Created at: {{ license.created_at }}
-<br>
-Updated: {{ license.updated_at|naturaltime }}
-</span>
-<h1><strong>Name:</strong> {{ license.customer.full_name }}</h1>
+<div class="container mt-4">
 
-<p>
-<strong>Email:</strong>
-<br>
-{{ license.customer.email }}
-</p>
+  <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+    <div>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-1">
+          <li class="breadcrumb-item"><a href="{% url 'licenses:all' %}" class="text-decoration-none">Licenses</a></li>
+          <li class="breadcrumb-item active" aria-current="page">License Details</li>
+        </ol>
+      </nav>
+      <h1 class="h2 mb-0 text-dark">
+        <span class="text-muted fw-light">Customer:</span> {{ license.customer.full_name }}
+      </h1>
+    </div>
 
-<p>
-<strong>Product:</strong>
-<br>
-{{ license.product.name }}
-</p>
+    <div>
+      <a href="{% url 'licenses:all' %}" class="btn btn-outline-secondary btn-sm">
+        <i class="fa fa-arrow-left me-1"></i> Back to All Licenses
+      </a>
+    </div>
+  </div>
 
-<p>
-<strong>License Key:</strong>
-<br>
-{{ license.license_key }}
-</p>
+  <div class="row g-4">
+    <div class="col-lg-8">
+      <div class="card shadow-sm h-100">
+        <div class="card-header bg-light py-3">
+          <h5 class="card-title mb-0 text-secondary small text-uppercase fw-bold tracking-wider">License Overview</h5>
+        </div>
+        <div class="card-body p-0">
+          <table class="table table-striped-columns align-middle mb-0">
+            <tbody>
+              <tr>
+                <th scope="row" class="ps-4 text-muted fw-medium" style="width: 30%;">Product</th>
+                <td class="pe-4 fw-semibold text-dark">{{ license.product.name }}</td>
+              </tr>
+              <tr>
+                <th scope="row" class="ps-4 text-muted fw-medium">License Key</th>
+                <td class="pe-4">
+                  <code class="bg-light border rounded px-2 py-1 text-danger small font-monospace">{{ license.license_key }}</code>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row" class="ps-4 text-muted fw-medium">Customer Email</th>
+                <td class="pe-4 text-muted">{{ license.customer.email }}</td>
+              </tr>
+              <tr>
+                <th scope="row" class="ps-4 text-muted fw-medium">Expiration Date</th>
+                <td class="pe-4 fw-medium">{{ license.expiration_date }}</td>
+              </tr>
+              <tr>
+                <th scope="row" class="ps-4 text-muted fw-medium">Status</th>
+                <td class="pe-4">
+                  {% if license.status == 'Active' %}
+                    <span class="badge bg-success-subtle text-success px-2.5 py-1.5 rounded-pill">Active</span>
+                  {% elif license.status == 'Inactive' %}
+                    <span class="badge bg-danger-subtle text-danger px-2.5 py-1.5 rounded-pill">Inactive</span>
+                  {% else %}
+                    <span class="badge bg-secondary-subtle text-secondary px-2.5 py-1.5 rounded-pill">{{ license.status }}</span>
+                  {% endif %}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
 
-<p>
-<strong>Expiration date:</strong>
-<br>
-{{ license.expiration_date }}
-</p>
+    <div class="col-lg-4">
+      <div class="d-flex flex-column gap-4">
+        <div class="card shadow-sm">
+          <div class="card-header bg-light py-3">
+            <h5 class="card-title mb-0 text-secondary small text-uppercase fw-bold tracking-wider">System Metadata</h5>
+          </div>
+          <div class="card-body py-3">
+            <ul class="list-group list-group-flush small">
+              <li class="list-group-item d-flex justify-content-between align-items-center px-0 bg-transparent">
+                <span class="text-muted">Created at:</span>
+                <span class="fw-medium text-dark">{{ license.created_at }}</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center px-0 bg-transparent">
+                <span class="text-muted">Last updated:</span>
+                <span class="fw-medium text-dark" title="{{ license.updated_at }}">{{ license.updated_at|naturaltime }}</span>
+              </li>
+              {% if license.suspended_at %}
+                <li class="list-group-item d-flex justify-content-between align-items-center px-0 bg-transparent border-danger-subtle">
+                  <span class="text-danger fw-medium">Suspended at:</span>
+                  <span class="fw-semibold text-danger">{{ license.suspended_at }}</span>
+                </li>
+              {% endif %}
+            </ul>
+          </div>
+        </div>
 
-<p>
-<strong>Status:</strong>
-<br>
-{{ license.status }}
-</p>
+        {% if user.is_superuser or user.is_admin %}
+          <div class="card border-warning-subtle bg-warning-subtle bg-opacity-10 shadow-sm">
+            <div class="card-body p-4">
+              <h6 class="fw-bold text-dark mb-2">Management Controls</h6>
+              <p class="text-muted small mb-3">Administrative access permitted. Modify or permanently delete this license deployment mapping.</p>
+              <div class="d-grid gap-2">
+                <a href="{% url 'licenses:license_update' license.pk %}" class="btn btn-warning d-flex align-items-center justify-content-center gap-2">
+                  <i class="fa fa-edit"></i> Edit License Configuration
+                </a>
+                <a href="{% url 'licenses:license_delete' license.pk %}" class="btn btn-outline-danger d-flex align-items-center justify-content-center gap-2">
+                  <i class="fa fa-trash"></i> Delete License Record
+                </a>
+              </div>
+            </div>
+          </div>
+        {% endif %}
 
+      </div>
+    </div>
+  </div>
 
-<br>
-<br>
-<p>
-<a href="{% url 'licenses:all' %}">Back to all licenses</a>
-{% if user.is_superuser or user.is_admin %}
-| <a href="{% url 'licenses:license_update' license.pk %}">Edit license</a>
-| <a href="{% url 'licenses:license_delete' license.pk %}">Delete license</a>
-{% endif %}
-</p>
+</div>
 {% endblock %}

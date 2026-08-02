@@ -1,4 +1,3 @@
-# from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils import timezone
@@ -6,7 +5,6 @@ from datetime import timedelta
 from licenses.models import License
 from customers.models import Customer
 from products.models import Product
-from django.db.models import Q
 # Create your views here.
 
 

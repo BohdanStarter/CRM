@@ -20,8 +20,8 @@ def generate_license_key():
     return key
 
 class License(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name="licenses")
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="licenses")
+    customer = models.ForeignKey(Customer, on_delete=models.RESTRICT, related_name="licenses")
+    product = models.ForeignKey(Product, on_delete=models.RESTRICT, related_name="licenses")
     license_key = models.CharField(max_length=19, unique=True, editable=False)
     ACTIVE = 'Active'
     INACTIVE = 'Inactive'
@@ -37,23 +37,40 @@ class License(models.Model):
     note = models.TextField(blank=True)
     purchase_date = models.DateTimeField(auto_now_add=True)
     expiration_date = models.DateTimeField(null=True, blank=True)
+    suspended_at = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    remaining_duration = models.DurationField(null=True, blank=True, editable=False)
 
 
     def save(self, *args, **kwargs):
         if not self.license_key:
             self.license_key = self.generate_unique_license_key()
 
-        if self.expiration_date is None and self.product.billing_type != Product.LIFETIME:
+        if self.expiration_date is None and self.product.billing_type != Product.LIFETIME and self.status != self.SUSPENDED:
             self.expiration_date = self.expiration()
+
+        if self.suspended_at is None and self.status == self.SUSPENDED and self.product.billing_type != Product.LIFETIME:
+            self.suspended_at = timezone.now()
+            self.handle_suspension_duration()
+            self.expiration_date = None
+        elif self.suspended_at and self.status == self.ACTIVE:
+            if self.product.billing_type != Product.LIFETIME:
+                self.handle_suspension_duration()
+            self.suspended_at = None
+        elif self.suspended_at is None and self.status == self.SUSPENDED and self.product.billing_type == Product.LIFETIME:
+            self.suspended_at = timezone.now()
+            self.expiration_date = None
+            self.remaining_duration = None
+
+        if self.status == self.INACTIVE:
+            self.suspended_at = None
+            self.remaining_duration = None
 
         super().save(*args, **kwargs)
 
     def clean(self):
-        if self.pk:
-            pass
-        else:
+        if not self.pk:
             if self.customer.status == Customer.INACTIVE:
                 raise ValidationError(
                     {"customer": gl("Customer should have an active status.")}
@@ -81,13 +98,18 @@ class License(models.Model):
         return expiration_date
 
 
-    # def update_status(self):
-    #     if self.is_expired:
-    #         self.status = self.EXPIRED
-    #         self.save()
-    #     else:
-    #         pass
-    #     return self.status
+    def handle_suspension_duration(self):
+        if not self.remaining_duration:
+            self.remaining_duration = self.expiration_date - timezone.now()
+        else:
+            self.expiration_date = timezone.now() + self.remaining_duration
+            self.remaining_duration = None
+
+    def update_status(self):
+        if self.is_expired and self.status == self.ACTIVE:
+            self.status = self.EXPIRED
+            self.save(update_fields=["status"])
+
 
     @property
     def is_expired(self):

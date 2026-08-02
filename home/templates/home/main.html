@@ -1,205 +1,243 @@
 {% extends "base_menu.html" %}
+
 {% block content %}
-<br>
-<h1>Welcome to dashboard!</h1>
-<br>
+<div class="container mt-4">
 
-<h3>Statistic: </h3>
+  <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-4">
+    <h1 class="h2 text-dark mb-0 fw-bold">Welcome to Dashboard!</h1>
+    <span class="text-muted small fw-medium">Overview & System Performance</span>
+  </div>
+  <h4 class="text-secondary small text-uppercase fw-bold tracking-wider mb-3">Statistics</h4>
+  <div class="row g-4 mb-5">
 
-<div class="row">
-  <div class="col-sm-4">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Customers:</h5>
-        <p class="card-text"><strong>{% if customer_amount != 0 %} {{ customer_amount }} {% else %} No customers yet.{% endif %}</strong></p>
-        {% if customer_amount == 0 %}
+    <div class="col-md-4">
+      <div class="card h-100 shadow-sm border-0 bg-white">
+        <div class="card-body d-flex flex-column justify-content-between p-4">
+          <div>
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <h5 class="card-title text-muted mb-0 small text-uppercase fw-semibold">Customers</h5>
+              <span class="badge bg-primary-subtle text-primary rounded-pill p-2"><i class="fa fa-users px-1"></i></span>
+            </div>
+            <h2 class="display-6 fw-bold text-dark mb-3">
+              {% if customer_amount != 0 %}{{ customer_amount }}{% else %}0{% endif %}
+            </h2>
+          </div>
+          {% if customer_amount == 0 %}
             {% if user.is_admin or user.is_support %}
-                <a href="{% url 'customers:customer_create' %}" class="btn btn-primary">Add a Customer</a>
+              <a href="{% url 'customers:customer_create' %}" class="btn btn-primary btn-sm w-100 mt-2">Add a Customer</a>
             {% endif %}
-        {% else %}
-            <a href="{% url 'customers:all' %}" class="btn btn-primary">Go to Customers</a>
-        {% endif %}
+          {% else %}
+            <a href="{% url 'customers:all' %}" class="btn btn-outline-primary btn-sm w-100 mt-2">Go to Customers</a>
+          {% endif %}
+        </div>
       </div>
     </div>
-  </div>
-  <div class="col-sm-4">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Products:</h5>
-        <p class="card-text"><strong>{% if product_amount != 0 %} {{ product_amount }} {% else %} No products yet.{% endif %}</strong></p>
-        {% if product_amount == 0 and user.is_admin %}
-            <a href="{% url 'products:product_create' %}" class="btn btn-primary">Add a Product</a>
-        {% else %}
-            <a href="{% url 'products:all' %}" class="btn btn-primary">Go to Products</a>
-        {% endif %}
+    <div class="col-md-4">
+      <div class="card h-100 shadow-sm border-0 bg-white">
+        <div class="card-body d-flex flex-column justify-content-between p-4">
+          <div>
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <h5 class="card-title text-muted mb-0 small text-uppercase fw-semibold">Products</h5>
+              <span class="badge bg-info-subtle text-info rounded-pill p-2"><i class="fa fa-cubes px-1"></i></span>
+            </div>
+            <h2 class="display-6 fw-bold text-dark mb-3">
+              {% if product_amount != 0 %}{{ product_amount }}{% else %}0{% endif %}
+            </h2>
+          </div>
+          {% if product_amount == 0 and user.is_admin %}
+            <a href="{% url 'products:product_create' %}" class="btn btn-info text-white btn-sm w-100 mt-2">Add a Product</a>
+          {% else %}
+            <a href="{% url 'products:all' %}" class="btn btn-outline-info btn-sm w-100 mt-2">Go to Products</a>
+          {% endif %}
+        </div>
       </div>
     </div>
-  </div>
-  <div class="col-sm-4">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Licenses:</h5>
-        <p class="card-text"><strong>{% if license_amount != 0 %} {{ license_amount }} {% else %} No licenses yet. {% endif %}</strong></p>
-        {% if license_amount == 0 and user.is_admin %}
-            <a href="{% url 'licenses:license_create' %}" class="btn btn-primary">Add a License</a>
-        {% else %}
-            <a href="{% url 'licenses:all' %}" class="btn btn-primary">Go to Licenses</a>
-        {% endif %}
+    <div class="col-md-4">
+      <div class="card h-100 shadow-sm border-0 bg-white">
+        <div class="card-body d-flex flex-column justify-content-between p-4">
+          <div>
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <h5 class="card-title text-muted mb-0 small text-uppercase fw-semibold">Licenses</h5>
+              <span class="badge bg-success-subtle text-success rounded-pill p-2"><i class="fa fa-key px-1"></i></span>
+            </div>
+            <h2 class="display-6 fw-bold text-dark mb-3">
+              {% if license_amount != 0 %}{{ license_amount }}{% else %}0{% endif %}
+            </h2>
+          </div>
+          {% if license_amount == 0 and user.is_admin %}
+            <a href="{% url 'licenses:license_create' %}" class="btn btn-success btn-sm w-100 mt-2">Add a License</a>
+          {% else %}
+            <a href="{% url 'licenses:all' %}" class="btn btn-outline-success btn-sm w-100 mt-2">Go to Licenses</a>
+          {% endif %}
+        </div>
       </div>
     </div>
-  </div>
-</div>
-<br>
-<h3>License Status: </h3>
 
-<div class="row">
-  <div class="col-sm-4">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Active:</h5>
-        <p class="card-text"><strong>
-            {% if active_license_amount != 0 %}
-                {{ active_license_amount }}
-            {% else %}
-                No active licenses yet.
-            {% endif %}
-        </strong></p>
-        <a href="{% url 'licenses:all' %}?search=active" class="btn btn-primary">Go to Active Licenses</a>
+  </div>
+  <h4 class="text-secondary small text-uppercase fw-bold tracking-wider mb-3">License Status</h4>
+  <div class="row g-4 mb-5">
+    <div class="col-md-4">
+      <div class="card shadow-sm border-start border-success border-4 bg-white h-100">
+        <div class="card-body p-4">
+          <h6 class="text-muted small text-uppercase fw-semibold mb-1">Active</h6>
+          <h3 class="fw-bold text-success mb-2">
+            {% if active_license_amount != 0 %}{{ active_license_amount }}{% else %}0{% endif %}
+          </h3>
+          <a href="{% url 'licenses:all' %}?search=active" class="link-success text-decoration-none small fw-medium d-inline-flex align-items-center gap-1">
+            Go to Active Licenses <i class="fa fa-chevron-right fs-7"></i>
+          </a>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="col-sm-4">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Expired:</h5>
-        <p class="card-text"><strong>
-            {% if expired_license_amount != 0 %}
-                {{ expired_license_amount }}
-            {% else %}
-                No expired licenses yet.
-            {% endif %}
-        </strong></p>
-        <a href="{% url 'licenses:all' %}?search=expired" class="btn btn-primary">Go to Expired Licenses</a>
+    <div class="col-md-4">
+      <div class="card shadow-sm border-start border-danger border-4 bg-white h-100">
+        <div class="card-body p-4">
+          <h6 class="text-muted small text-uppercase fw-semibold mb-1">Expired</h6>
+          <h3 class="fw-bold text-danger mb-2">
+            {% if expired_license_amount != 0 %}{{ expired_license_amount }}{% else %}0{% endif %}
+          </h3>
+          <a href="{% url 'licenses:all' %}?search=expired" class="link-danger text-decoration-none small fw-medium d-inline-flex align-items-center gap-1">
+            Go to Expired Licenses <i class="fa fa-chevron-right fs-7"></i>
+          </a>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="col-sm-4">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Suspended:</h5>
-        <p class="card-text"><strong>
-            {% if suspended_license_amount != 0 %}
-                {{ suspended_license_amount }}
-            {% else %}
-                No suspended licenses yet.
-            {% endif %}
-        </strong></p>
-        <a href="{% url 'licenses:all' %}?search=suspended" class="btn btn-primary">Go to Suspended Licenses</a>
+
+    <div class="col-md-4">
+      <div class="card shadow-sm border-start border-warning border-4 bg-white h-100">
+        <div class="card-body p-4">
+          <h6 class="text-muted small text-uppercase fw-semibold mb-1">Suspended</h6>
+          <h3 class="fw-bold text-warning mb-2">
+            {% if suspended_license_amount != 0 %}{{ suspended_license_amount }}{% else %}0{% endif %}
+          </h3>
+          <a href="{% url 'licenses:all' %}?search=suspended" class="link-warning text-decoration-none small fw-medium d-inline-flex align-items-center gap-1">
+            Go to Suspended Licenses <i class="fa fa-chevron-right fs-7"></i>
+          </a>
+        </div>
       </div>
     </div>
+
   </div>
-</div>
-
-{% if expire_list %}
-<br>
-<h3>Licenses that will expire in the next 14 days:</h3>
-<br>
-<table class="table table-striped table-hover">
-<thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Customer</th>
-      <th scope="col">Product</th>
-      <th scope="col">Billing type</th>
-      <th scope="col">Expiration date</th>
-    </tr>
- </thead>
-<tbody>
-{% for license in expire_list %}
-    <tr>
-      <th scope="row">{{ forloop.counter }}</th>
-      <td><a href="{% url 'licenses:license_detail'  license.pk %}">{{ license.customer }}</a></td>
-      <td>{{ license.product }}</td>
-      <td>{{ license.product.billing_type }}</td>
-      <td>{{ license.expiration_date|date:"D d M Y" }}</td>
-    </tr>
-{% endfor %}
-</tbody>
-</table>
-{% endif %}
-
-{% if recent_customer %}
-<br>
-<h3>Customers added for past 14 days:</h3>
-<br>
-<table class="table table-striped table-hover">
-<thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Customer</th>
-      <th scope="col">Email</th>
-      <th scope="col">Phone Number</th>
-      <th scope="col">Created at</th>
-    </tr>
- </thead>
-<tbody>
-{% for customer in recent_customer %}
-    <tr>
-      <th scope="row">{{ forloop.counter }}</th>
-      <td><a href="{% url 'customers:customer_detail'  customer.pk %}">{{ customer.full_name }}</a></td>
-      <td>{{ customer.email }}</td>
-      <td>{{ customer.phone_number }}</td>
-      <td>{{ customer.created_at|date:"D d M Y" }}</td>
-    </tr>
-{% endfor %}
-</tbody>
-</table>
-{% endif %}
-
+  <div class="d-flex flex-column gap-5">
+    {% if expire_list %}
+      <div class="card shadow-sm border-0">
+        <div class="card-header bg-danger-subtle border-0 py-3">
+          <h5 class="card-title text-danger mb-0 h6 fw-bold d-flex align-items-center gap-2">
+            <i class="fa fa-exclamation-circle"></i> Licenses that will expire in the next 14 days:
+          </h5>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0 text-nowrap">
+            <thead class="table-light text-muted small">
+              <tr>
+                <th scope="col" class="ps-4" style="width: 5%">#</th>
+                <th scope="col">Customer</th>
+                <th scope="col">Product</th>
+                <th scope="col">Billing type</th>
+                <th scope="col" class="pe-4 text-end">Expiration date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for license in expire_list %}
+                <tr>
+                  <th scope="row" class="ps-4 text-muted font-monospace small">{{ forloop.counter }}</th>
+                  <td>
+                    <a href="{% url 'licenses:license_detail' license.pk %}" class="fw-semibold text-decoration-none">
+                      {{ license.customer }}
+                    </a>
+                  </td>
+                  <td class="text-dark">{{ license.product }}</td>
+                  <td><span class="badge bg-light text-secondary border">{{ license.product.billing_type }}</span></td>
+                  <td class="pe-4 text-end fw-medium text-danger">{{ license.expiration_date|date:"D d M Y" }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    {% endif %}
+    {% if recent_customer %}
+      <div class="card shadow-sm border-0">
+        <div class="card-header bg-light border-0 py-3">
+          <h5 class="card-title text-dark mb-0 h6 fw-bold d-flex align-items-center gap-2">
+            <i class="fa fa-user-plus text-primary"></i> Customers added for past 14 days:
+          </h5>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0 text-nowrap">
+            <thead class="table-light text-muted small">
+              <tr>
+                <th scope="col" class="ps-4" style="width: 5%">#</th>
+                <th scope="col">Customer</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone Number</th>
+                <th scope="col" class="pe-4 text-end">Created at</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for customer in recent_customer %}
+                <tr>
+                  <th scope="row" class="ps-4 text-muted font-monospace small">{{ forloop.counter }}</th>
+                  <td>
+                    <a href="{% url 'customers:customer_detail' customer.pk %}" class="fw-semibold text-decoration-none">
+                      {{ customer.full_name }}
+                    </a>
+                  </td>
+                  <td class="text-muted">{{ customer.email }}</td>
+                  <td class="text-muted font-monospace small">{{ customer.phone_number }}</td>
+                  <td class="pe-4 text-end text-secondary fw-medium">{{ customer.created_at|date:"D d M Y" }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    {% endif %}
 {% if recent_list %}
-<br>
-<h3>Licenses added for past 14 days:</h3>
-<br>
-<table class="table table-striped table-hover">
-<thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Customer</th>
-      <th scope="col">Product</th>
-      <th scope="col">Billing type</th>
-      <th scope="col">License key</th>
-      <th scope="col">Purchase date</th>
-    </tr>
- </thead>
-<tbody>
-{% for license in recent_list %}
-    <tr>
-      <th scope="row">{{ forloop.counter }}</th>
-      <td><a href="{% url 'licenses:license_detail'  license.pk %}">{{ license.customer }}</a></td>
-      <td>{{ license.product }}</td>
-      <td>{{ license.product.billing_type }}</td>
-      <td>{{ license.license_key }}</td>
-      <td>{{ license.purchase_date|date:"D d M Y" }}</td>
-    </tr>
-{% endfor %}
-</tbody>
-</table>
+  <div class="card shadow-sm border-0 mt-5">
+    <div class="card-header bg-light border-0 py-3">
+      <h5 class="card-title text-dark mb-0 h6 fw-bold d-flex align-items-center gap-2">
+        <i class="fa fa-check-circle text-success"></i> Licenses added for past 14 days:
+      </h5>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0 text-nowrap">
+        <thead class="table-light text-muted small">
+          <tr>
+            <th scope="col" class="ps-4" style="width: 5%">#</th>
+            <th scope="col">Customer</th>
+            <th scope="col">Product</th>
+            <th scope="col">Billing type</th>
+            <th scope="col">License key</th>
+            <th scope="col" class="pe-4 text-end">Purchase date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for license in recent_list %}
+            <tr>
+              <th scope="row" class="ps-4 text-muted font-monospace small">{{ forloop.counter }}</th>
+              <td>
+                <a href="{% url 'licenses:license_detail' license.pk %}" class="fw-semibold text-decoration-none">
+                  {{ license.customer }}
+                </a>
+              </td>
+              <td class="text-dark">{{ license.product }}</td>
+              <td>
+                <span class="badge bg-light text-secondary border">{{ license.product.billing_type }}</span>
+              </td>
+              <td>
+                <code class="text-danger font-monospace bg-light rounded px-1.5 py-0.5 border fs-7">{{ license.license_key|truncatechars:15 }}</code>
+              </td>
+              <td class="pe-4 text-end text-secondary fw-medium">
+                {{ license.purchase_date|date:"D d M Y" }}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
 {% endif %}
 
 {% endblock %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

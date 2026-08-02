@@ -1,49 +1,111 @@
 {% extends "base_menu.html" %}
 {% block content %}
-<h1>Customers List</h1>
-<p>
-{% if page_obj %}
-<ul>
-  {% for customer in page_obj %}
-    <li>
-        <a href="{% url 'customers:customer_detail'  customer.pk %}">{{ customer.full_name }}</a>
-        | {{ customer.email }}
-        | {{ customer.status }}
-    </li>
-  {% endfor %}
-</ul>
-<div class="pagination">
-    <span class="step-links">
+<div class="container mt-4">
+
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h2 mb-0 text-dark">Customers List</h1>
+    {% if user.is_superuser or user.is_admin or user.is_support %}
+      <a href="{% url 'customers:customer_create' %}" class="btn btn-success d-flex align-items-center gap-2">
+        <i class="bi bi-plus-lg"></i> Add a New Customer
+      </a>
+    {% endif %}
+  </div>
+
+  {% if page_obj %}
+    <div class="card shadow-sm mb-4">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th scope="col" class="ps-4">Full Name</th>
+              <th scope="col">Email</th>
+              <th scope="col" class="pe-4 text-end">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for customer in page_obj %}
+              <tr>
+                <td class="ps-4">
+                  <a href="{% url 'customers:customer_detail' customer.pk %}" class="fw-semibold text-decoration-none">
+                    {{ customer.full_name }}
+                  </a>
+                </td>
+                <td class="text-muted">{{ customer.email }}</td>
+                <td class="pe-4 text-end">
+                  {% if customer.status == 'Active' %}
+                    <span class="badge bg-success-subtle text-success px-2.5 py-1.5 rounded-pill">Active</span>
+                  {% elif customer.status == 'Inactive' %}
+                    <span class="badge bg-danger-subtle text-danger px-2.5 py-1.5 rounded-pill">Inactive</span>
+                  {% else %}
+                    <span class="badge bg-secondary-subtle text-secondary px-2.5 py-1.5 rounded-pill">{{ customer.status }}</span>
+                  {% endif %}
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <nav aria-label="Page navigation" class="d-flex justify-content-between align-items-center mb-4">
+      <span class="text-muted small">
+        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+      </span>
+
+      <ul class="pagination pagination-sm mb-0">
         {% if page_obj.has_previous %}
-            <a href="?page=1">&laquo; First</a>
-            <a href="?page={{ page_obj.previous_page_number }}"> Previous </a>
+          <li class="page-item">
+            <a class="page-link" href="?page=1" aria-label="First">&laquo; First</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+          </li>
+        {% else %}
+          <li class="page-item disabled"><span class="page-link">&laquo; First</span></li>
+          <li class="page-item disabled"><span class="page-link">Previous</span></li>
         {% endif %}
 
-        <span class="current">
-            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-        </span>
+        <li class="page-item active" aria-current="page">
+          <span class="page-link">{{ page_obj.number }}</span>
+        </li>
 
         {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}"> Next </a>
-            <a href="?page={{ page_obj.paginator.num_pages }}"> Last &raquo;</a>
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Last">Last &raquo;</a>
+          </li>
+        {% else %}
+          <li class="page-item disabled"><span class="page-link">Next</span></li>
+          <li class="page-item disabled"><span class="page-link">Last &raquo;</span></li>
         {% endif %}
-    </span>
-</div>
-{% else %}
-  <p>There are no customers in the database.</p>
-{% endif %}
-</p>
-<p>
-{% if user.is_superuser or user.is_admin or user.is_support %}
-<a href="{% url 'customers:customer_create'%}">Add a new Customer</a>
-{% endif %}
-</p>
-<p>
-{% if user.is_authenticated %}
-    <strong><p> Logged in as {{ user.username }}. Role: {{ user.role }}</p> </strong>
-{% else %}
-    <strong><p>Not currently logged in.</p></strong>
-{% endif %}
-</p>
+      </ul>
+    </nav>
 
+  {% else %}
+    <div class="alert alert-info text-center py-4 shadow-sm" role="alert">
+      <p class="mb-0 fw-medium">There are no customers in the database.</p>
+    </div>
+  {% endif %}
+
+
+  <div class="card bg-light border-0 py-3 px-4 rounded-3 mt-5">
+    <div class="d-flex justify-content-between align-items-center">
+      {% if user.is_authenticated %}
+        <div class="text-secondary small">
+          Logged in as: <strong class="text-dark">{{ user.username }}</strong>
+        </div>
+        <div class="badge bg-primary-subtle text-primary px-3 py-2">
+          Role: {{ user.role }}
+        </div>
+      {% else %}
+        <div class="text-danger small fw-medium">
+          Not currently logged in.
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+</div>
 {% endblock %}

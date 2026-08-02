@@ -31,7 +31,11 @@ class LicenseUpdateForm(forms.ModelForm):
         super(LicenseUpdateForm, self).__init__(*args, **kwargs)
         self.fields["customer"].disabled = True
         self.fields["product"].disabled = True
-        # CHANGE IT
+        if self.instance.status == License.INACTIVE:
+            self.fields["note"].required = True
+            self.fields["status"].disabled = True
+
+
 
 
 

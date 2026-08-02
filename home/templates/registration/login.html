@@ -1,0 +1,69 @@
+{% extends "base_bootstrap.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center py-5" style="min-height: 80vh;">
+  <div class="card shadow-lg border-0 rounded-4 w-100" style="max-width: 450px; background-color: #ffffff;">
+    <div class="card-body p-4 p-md-5">
+
+      <!-- Brand & Header Title -->
+      <div class="text-center mb-4">
+        <h2 class="fw-bold text-dark m-0">Welcome Back!</h2>
+        <p class="text-muted small mt-1">Please sign in to your account</p>
+      </div>
+
+      <!-- Error Handling (Stylized Django Message) -->
+      <!--{% if form.errors %}-->
+      <!--  <div class="alert alert-danger alert-dismissible fade show d-flex align-items-center small py-2 px-3 mb-4 rounded-3" role="alert">-->
+      <!--    <i class="bi bi-exclamation-triangle-fill me-2" style="font-family: bootstrap-icons;"></i>-->
+      <!--    <div>Your username and password didn't match.</div>-->
+      <!--  </div>-->
+      <!--{% endif %}-->
+
+      <!-- Login Form -->
+      <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+
+        <!-- Django Crispy Form Rendering -->
+        <div class="mb-3 label-muted-crispy">
+          {{ form|crispy }}
+        </div>
+
+        <!-- Custom Controls Block -->
+        <div class="mb-4 d-flex justify-content-between align-items-center">
+          <div class="form-check form-switch m-0">
+            <input class="form-check-input" type="checkbox" id="show_password">
+            <label class="form-check-label text-muted small" for="show_password">
+              Show Password
+            </label>
+          </div>
+        </div>
+
+        <!-- Action Button -->
+        <button type="submit" class="btn btn-primary w-100 py-2.5 fw-semibold shadow-sm rounded-3">
+          Login
+        </button>
+
+        <input type="hidden" name="next" value="{{ next }}" />
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<!-- Password Visibility Script -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const showPasswordCheckbox = document.getElementById('show_password');
+
+    showPasswordCheckbox.addEventListener('change', function() {
+      // Crispy Forms defaults the password input ID to 'id_password'
+      const passwordField = document.getElementById('id_password');
+
+      if (passwordField) {
+        passwordField.type = this.checked ? 'text' : 'password';
+      }
+    });
+  });
+</script>
+{% endblock %}
