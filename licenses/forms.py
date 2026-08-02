@@ -35,6 +35,20 @@ class LicenseUpdateForm(forms.ModelForm):
             self.fields["note"].required = True
             self.fields["status"].disabled = True
 
+    def clean(self):
+        cleaned_data = super().clean()
+
+        status = cleaned_data.get("status")
+        note = cleaned_data.get("note")
+
+        if status == License.INACTIVE and not note:
+            self.add_error(
+                "note",
+                "A note is required when deactivating a license."
+            )
+
+        return cleaned_data
+
 
 
 
