@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-
+import sys
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -63,7 +63,7 @@ AUTH_USER_MODEL = 'accounts.User'
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
-HUEY = {'huey_class': 'huey.SqliteHuey', 'immediate': False}
+HUEY = {'huey_class': 'huey.SqliteHuey', 'results': True, 'store_none': True, 'immediate': 'test' in sys.argv,}
 
 LOGGING = {
     'version': 1,

@@ -4,6 +4,7 @@ from dateutil.relativedelta import relativedelta
 from django.utils import timezone
 from datetime import timedelta
 import re
+from licenses.tasks import status_update_task
 from licenses.models import License
 from products.models import Product
 from customers.models import Customer
@@ -215,6 +216,20 @@ class LicenseTestCase(TestCase):
         self.assertEqual(license.note, "This is a test for a form")
         self.assertEqual(license.status, License.SUSPENDED)
 
+        form = LicenseUpdateForm(instance=license, data={"note": "This is a test for a form of an inactive license", "status": License.INACTIVE})
+
+        self.assertTrue(form.is_valid())
+
+        form.save()
+        license.refresh_from_db()
+
+        self.assertEqual(license.note, "This is a test for a form of an inactive license")
+        self.assertEqual(license.status, License.INACTIVE)
+
+        form = LicenseUpdateForm(instance=license)
+
+        self.assertTrue(form.fields["status"].disabled)
+
     def test_suspend_subscription_license(self):
         product_monthly = Product.objects.get(name="VPN 1 month")
         license = License.objects.get(product=product_monthly)
@@ -304,4 +319,43 @@ class LicenseTestCase(TestCase):
         self.assertTrue(license.expiration_date)
         self.assertIsNone(license.remaining_duration)
         self.assertIsNone(license.suspended_at)
+
+    def test_change_active_license_to_inactive(self):
+        product_monthly = Product.objects.get(name="VPN 1 month")
+        license = License.objects.get(product=product_monthly)
+
+        self.assertEqual(license.status, License.ACTIVE)
+        self.assertTrue(license.expiration_date)
+        self.assertIsNone(license.remaining_duration)
+        self.assertIsNone(license.suspended_at)
+
+        license.status = License.INACTIVE
+        license.save()
+
+        self.assertEqual(license.status, License.INACTIVE)
+        self.assertTrue(license.expiration_date)
+        self.assertIsNone(license.remaining_duration)
+        self.assertIsNone(license.suspended_at)
+
+
+    def test_status_update_task(self):
+        product_monthly = Product.objects.get(name="VPN 1 month")
+        license = License.objects.get(product=product_monthly)
+
+        license.expiration_date = timezone.now() - relativedelta(days=10)
+        license.save()
+
+        expired_date = license.expiration_date
+
+        self.assertEqual(license.status, License.ACTIVE)
+
+        status_update_task()
+
+        license.refresh_from_db()
+
+        self.assertEqual(license.status, License.EXPIRED)
+        self.assertEqual(license.expiration_date, expired_date)
+
+
+
 
