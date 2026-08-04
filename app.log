@@ -1,0 +1,5 @@
+INFO 2026-08-04 16:15:13,853 consumer Huey consumer started with 1 thread, PID 130 at 2026-08-04 16:15:13.853441
+INFO 2026-08-04 16:15:13,853 consumer Scheduler runs every 1 second(s).
+INFO 2026-08-04 16:15:13,853 consumer Periodic tasks are enabled.
+INFO 2026-08-04 16:15:13,854 consumer The following commands are available:
++ licenses.tasks.status_update_task

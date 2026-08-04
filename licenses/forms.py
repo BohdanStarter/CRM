@@ -32,7 +32,6 @@ class LicenseUpdateForm(forms.ModelForm):
         self.fields["customer"].disabled = True
         self.fields["product"].disabled = True
         if self.instance.status == License.INACTIVE:
-            self.fields["note"].required = True
             self.fields["status"].disabled = True
 
     def clean(self):

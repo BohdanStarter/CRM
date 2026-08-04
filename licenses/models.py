@@ -106,9 +106,8 @@ class License(models.Model):
             self.remaining_duration = None
 
     def update_status(self):
-        if self.is_expired and self.status == self.ACTIVE:
-            self.status = self.EXPIRED
-            self.save(update_fields=["status"])
+        self.status = self.EXPIRED
+        self.save(update_fields=["status"])
 
 
     @property

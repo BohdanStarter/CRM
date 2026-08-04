@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 
     # Added apps
+    "huey.contrib.djhuey",
     "phonenumber_field",
     "crispy_forms",
     "crispy_bootstrap5",
@@ -62,6 +63,32 @@ AUTH_USER_MODEL = 'accounts.User'
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
+HUEY = {'huey_class': 'huey.SqliteHuey', 'immediate': False}
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': 'app.log',  # This creates a file in your project root
+            'formatter': 'verbose',
+        },
+    },
+    'loggers': {
+        '': {  # The empty string means catch ALL logs (Django, Huey, and your code)
+            'handlers': ['file'],
+            'level': 'INFO',
+        },
+    },
+}
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",

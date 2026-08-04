@@ -7,8 +7,7 @@ import re
 from licenses.models import License
 from products.models import Product
 from customers.models import Customer
-from licenses.forms import LicenseCreateForm
-from licenses.forms import LicenseUpdateForm
+from licenses.forms import LicenseCreateForm, LicenseUpdateForm
 # Create your tests here.
 
 
@@ -83,7 +82,7 @@ class LicenseTestCase(TestCase):
         lifetime = License.objects.get(product=product_lifetime)
         year = License.objects.get(product=product_year)
         month = License.objects.get(product=product_month)
-        print("Method: test_key_generated passed the test.")
+
         self.assertTrue(lifetime.license_key)
         self.assertTrue(year.license_key)
         self.assertTrue(month.license_key)
@@ -98,7 +97,6 @@ class LicenseTestCase(TestCase):
         lifetime = License.objects.get(product=product_lifetime)
         year = License.objects.get(product=product_year)
         month = License.objects.get(product=product_month)
-        print("Method: test_expiration_date passed the test.")
 
         # Check if expiration date is added automatically
         self.assertTrue(year.expiration_date)
@@ -212,14 +210,98 @@ class LicenseTestCase(TestCase):
         self.assertTrue(form.is_valid())
 
         form.save()
+        license.refresh_from_db()
 
         self.assertEqual(license.note, "This is a test for a form")
         self.assertEqual(license.status, License.SUSPENDED)
 
+    def test_suspend_subscription_license(self):
+        product_monthly = Product.objects.get(name="VPN 1 month")
+        license = License.objects.get(product=product_monthly)
+
+        # Before suspension
+        self.assertEqual(license.status, License.ACTIVE)
+        self.assertTrue(license.expiration_date)
+        self.assertIsNone(license.remaining_duration)
+        self.assertIsNone(license.suspended_at)
+
+        license.status = License.SUSPENDED
+        license.save()
+
+        # After
+        self.assertEqual(license.status, License.SUSPENDED)
+        self.assertIsNone(license.expiration_date)
+        self.assertTrue(license.remaining_duration)
+        self.assertTrue(license.suspended_at)
+
+        license.status = License.ACTIVE
+        license.save()
+
+        # Restored
+        self.assertEqual(license.status, License.ACTIVE)
+        self.assertTrue(license.expiration_date)
+        self.assertIsNone(license.remaining_duration)
+        self.assertIsNone(license.suspended_at)
+
+    def test_suspend_lifetime_license(self):
+        product_lifetime = Product.objects.get(name="VPN Unlimited")
+        license = License.objects.get(product=product_lifetime)
+
+        # Before suspension
+        self.assertEqual(license.status, License.ACTIVE)
+        self.assertIsNone(license.expiration_date)
+        self.assertIsNone(license.remaining_duration)
+        self.assertIsNone(license.suspended_at)
+
+        license.status = License.SUSPENDED
+        license.save()
+
+        # After
+        self.assertEqual(license.status, License.SUSPENDED)
+        self.assertIsNone(license.expiration_date)
+        self.assertIsNone(license.remaining_duration)
+        self.assertTrue(license.suspended_at)
+
+        license.status = License.ACTIVE
+        license.save()
+
+        # Restored
+        self.assertEqual(license.status, License.ACTIVE)
+        self.assertIsNone(license.expiration_date)
+        self.assertIsNone(license.remaining_duration)
+        self.assertIsNone(license.suspended_at)
 
 
+    def test_update_status(self):
+        product_monthly = Product.objects.get(name="VPN 1 month")
+        license = License.objects.get(product=product_monthly)
 
+        self.assertEqual(license.status, License.ACTIVE)
 
+        license.update_status()
+        license.refresh_from_db()
 
+        self.assertEqual(license.status, License.EXPIRED)
 
+    def test_change_suspended_license_to_inactive(self):
+        product_monthly = Product.objects.get(name="VPN 1 month")
+        license = License.objects.get(product=product_monthly)
+
+        license.status = License.SUSPENDED
+        license.save()
+
+        # Suspended
+        self.assertEqual(license.status, License.SUSPENDED)
+        self.assertIsNone(license.expiration_date)
+        self.assertTrue(license.remaining_duration)
+        self.assertTrue(license.suspended_at)
+
+        license.status = License.INACTIVE
+        license.save()
+
+        # Inactive
+        self.assertEqual(license.status, License.INACTIVE)
+        self.assertTrue(license.expiration_date)
+        self.assertIsNone(license.remaining_duration)
+        self.assertIsNone(license.suspended_at)
 
