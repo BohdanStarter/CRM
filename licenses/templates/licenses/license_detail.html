@@ -63,6 +63,17 @@
                   {% endif %}
                 </td>
               </tr>
+              {% if license.status == 'Expired' %}
+              <tr>
+                <th scope="row" class="ps-4 text-muted fw-medium">License Renew</th>
+                <td class="pe-4">
+                <form method="post">
+                    {% csrf_token %}
+                    <button class="btn btn-success" type="submit" name="renew_button" value="renew">Renew Now</button>
+                </td>
+                </form>
+              </tr>
+              {% endif %}
             </tbody>
           </table>
         </div>

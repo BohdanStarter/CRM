@@ -32,3 +32,167 @@ INFO 2026-08-04 17:30:01,458 api Executing licenses.tasks.status_update_task: ad
 INFO 2026-08-04 17:30:01,458 tasks Starting expiration check...
 INFO 2026-08-04 17:30:01,459 tasks 1 - licenses have been updated successfully!
 INFO 2026-08-04 17:30:01,459 api licenses.tasks.status_update_task: adc8c7d2-1b22-443e-a62e-875bf39e2516 executed in 0.001s
+INFO 2026-08-04 18:00:13,855 consumer Enqueueing periodic task licenses.tasks.status_update_task: 7dd95d05-70e4-427b-9770-27291763f927.
+INFO 2026-08-04 18:00:18,874 api Executing licenses.tasks.status_update_task: 7dd95d05-70e4-427b-9770-27291763f927
+INFO 2026-08-04 18:00:18,874 tasks Starting expiration check...
+INFO 2026-08-04 18:00:18,878 tasks No license to update for now.
+INFO 2026-08-04 18:00:18,878 api licenses.tasks.status_update_task: 7dd95d05-70e4-427b-9770-27291763f927 executed in 0.004s
+INFO 2026-08-04 19:00:13,855 consumer Enqueueing periodic task licenses.tasks.status_update_task: 8a14865f-c0f8-4072-8037-e40cbbae9d22.
+INFO 2026-08-04 19:00:16,027 api Executing licenses.tasks.status_update_task: 8a14865f-c0f8-4072-8037-e40cbbae9d22
+INFO 2026-08-04 19:00:16,027 tasks Starting expiration check...
+INFO 2026-08-04 19:00:16,029 tasks No license to update for now.
+INFO 2026-08-04 19:00:16,029 api licenses.tasks.status_update_task: 8a14865f-c0f8-4072-8037-e40cbbae9d22 executed in 0.002s
+INFO 2026-08-04 20:00:13,854 consumer Enqueueing periodic task licenses.tasks.status_update_task: d81f4719-0b7b-4ea9-872d-2893c0a07912.
+INFO 2026-08-04 20:00:23,125 api Executing licenses.tasks.status_update_task: d81f4719-0b7b-4ea9-872d-2893c0a07912
+INFO 2026-08-04 20:00:23,125 tasks Starting expiration check...
+INFO 2026-08-04 20:00:23,128 tasks No license to update for now.
+INFO 2026-08-04 20:00:23,128 api licenses.tasks.status_update_task: d81f4719-0b7b-4ea9-872d-2893c0a07912 executed in 0.002s
+INFO 2026-08-04 21:00:13,854 consumer Enqueueing periodic task licenses.tasks.status_update_task: 4dd7d1b6-3703-475e-b76c-bc351eb355e3.
+INFO 2026-08-04 21:00:20,200 api Executing licenses.tasks.status_update_task: 4dd7d1b6-3703-475e-b76c-bc351eb355e3
+INFO 2026-08-04 21:00:20,200 tasks Starting expiration check...
+INFO 2026-08-04 21:00:20,202 tasks No license to update for now.
+INFO 2026-08-04 21:00:20,202 api licenses.tasks.status_update_task: 4dd7d1b6-3703-475e-b76c-bc351eb355e3 executed in 0.002s
+INFO 2026-08-04 22:00:13,854 consumer Enqueueing periodic task licenses.tasks.status_update_task: 33c2bb06-5888-4e77-ba89-76acf4de9873.
+INFO 2026-08-04 22:00:17,293 api Executing licenses.tasks.status_update_task: 33c2bb06-5888-4e77-ba89-76acf4de9873
+INFO 2026-08-04 22:00:17,293 tasks Starting expiration check...
+INFO 2026-08-04 22:00:17,296 tasks No license to update for now.
+INFO 2026-08-04 22:00:17,296 api licenses.tasks.status_update_task: 33c2bb06-5888-4e77-ba89-76acf4de9873 executed in 0.003s
+INFO 2026-08-04 23:00:13,854 consumer Enqueueing periodic task licenses.tasks.status_update_task: 030343ff-ffe8-4a6d-be7e-53299d593e8c.
+INFO 2026-08-04 23:00:16,288 api Executing licenses.tasks.status_update_task: 030343ff-ffe8-4a6d-be7e-53299d593e8c
+INFO 2026-08-04 23:00:16,288 tasks Starting expiration check...
+INFO 2026-08-04 23:00:16,291 tasks No license to update for now.
+INFO 2026-08-04 23:00:16,291 api licenses.tasks.status_update_task: 030343ff-ffe8-4a6d-be7e-53299d593e8c executed in 0.003s
+INFO 2026-08-05 00:00:13,854 consumer Enqueueing periodic task licenses.tasks.status_update_task: 8b4bf271-595c-45ae-8b65-c48440fc38f7.
+INFO 2026-08-05 00:00:23,398 api Executing licenses.tasks.status_update_task: 8b4bf271-595c-45ae-8b65-c48440fc38f7
+INFO 2026-08-05 00:00:23,399 tasks Starting expiration check...
+INFO 2026-08-05 00:00:23,402 tasks No license to update for now.
+INFO 2026-08-05 00:00:23,402 api licenses.tasks.status_update_task: 8b4bf271-595c-45ae-8b65-c48440fc38f7 executed in 0.003s
+INFO 2026-08-05 01:00:13,854 consumer Enqueueing periodic task licenses.tasks.status_update_task: c5d2df5f-22a6-4da4-aebf-d82c98b7a10f.
+INFO 2026-08-05 01:00:20,583 api Executing licenses.tasks.status_update_task: c5d2df5f-22a6-4da4-aebf-d82c98b7a10f
+INFO 2026-08-05 01:00:20,583 tasks Starting expiration check...
+INFO 2026-08-05 01:00:20,585 tasks No license to update for now.
+INFO 2026-08-05 01:00:20,585 api licenses.tasks.status_update_task: c5d2df5f-22a6-4da4-aebf-d82c98b7a10f executed in 0.002s
+INFO 2026-08-05 02:00:13,854 consumer Enqueueing periodic task licenses.tasks.status_update_task: 1ea1dc44-ef94-40f9-ac79-36b4e4213934.
+INFO 2026-08-05 02:00:17,761 api Executing licenses.tasks.status_update_task: 1ea1dc44-ef94-40f9-ac79-36b4e4213934
+INFO 2026-08-05 02:00:17,761 tasks Starting expiration check...
+INFO 2026-08-05 02:00:17,764 tasks No license to update for now.
+INFO 2026-08-05 02:00:17,764 api licenses.tasks.status_update_task: 1ea1dc44-ef94-40f9-ac79-36b4e4213934 executed in 0.002s
+INFO 2026-08-05 03:00:13,855 consumer Enqueueing periodic task licenses.tasks.status_update_task: eb0203db-c87d-4012-8b03-f4d77beb05c2.
+INFO 2026-08-05 03:00:14,924 api Executing licenses.tasks.status_update_task: eb0203db-c87d-4012-8b03-f4d77beb05c2
+INFO 2026-08-05 03:00:14,925 tasks Starting expiration check...
+INFO 2026-08-05 03:00:14,927 tasks No license to update for now.
+INFO 2026-08-05 03:00:14,927 api licenses.tasks.status_update_task: eb0203db-c87d-4012-8b03-f4d77beb05c2 executed in 0.002s
+INFO 2026-08-05 04:00:13,854 consumer Enqueueing periodic task licenses.tasks.status_update_task: 497ea38b-72b4-457e-a2de-2821ae7f49ab.
+INFO 2026-08-05 04:00:22,323 api Executing licenses.tasks.status_update_task: 497ea38b-72b4-457e-a2de-2821ae7f49ab
+INFO 2026-08-05 04:00:22,323 tasks Starting expiration check...
+INFO 2026-08-05 04:00:22,325 tasks No license to update for now.
+INFO 2026-08-05 04:00:22,325 api licenses.tasks.status_update_task: 497ea38b-72b4-457e-a2de-2821ae7f49ab executed in 0.002s
+INFO 2026-08-05 05:00:13,857 consumer Enqueueing periodic task licenses.tasks.status_update_task: 5c9ab48e-0036-46b0-8c97-2566983e22c1.
+INFO 2026-08-05 05:00:19,410 api Executing licenses.tasks.status_update_task: 5c9ab48e-0036-46b0-8c97-2566983e22c1
+INFO 2026-08-05 05:00:19,410 tasks Starting expiration check...
+INFO 2026-08-05 05:00:19,413 tasks No license to update for now.
+INFO 2026-08-05 05:00:19,413 api licenses.tasks.status_update_task: 5c9ab48e-0036-46b0-8c97-2566983e22c1 executed in 0.002s
+INFO 2026-08-05 06:00:13,855 consumer Enqueueing periodic task licenses.tasks.status_update_task: 2846f94b-6eec-45fa-b5e9-20f4f0e6134f.
+INFO 2026-08-05 06:00:16,500 api Executing licenses.tasks.status_update_task: 2846f94b-6eec-45fa-b5e9-20f4f0e6134f
+INFO 2026-08-05 06:00:16,500 tasks Starting expiration check...
+INFO 2026-08-05 06:00:16,502 tasks No license to update for now.
+INFO 2026-08-05 06:00:16,502 api licenses.tasks.status_update_task: 2846f94b-6eec-45fa-b5e9-20f4f0e6134f executed in 0.002s
+INFO 2026-08-05 07:00:13,854 consumer Enqueueing periodic task licenses.tasks.status_update_task: 96cd33af-aaad-48e8-96f6-e5cdaf0ab0d2.
+INFO 2026-08-05 07:00:23,641 api Executing licenses.tasks.status_update_task: 96cd33af-aaad-48e8-96f6-e5cdaf0ab0d2
+INFO 2026-08-05 07:00:23,642 tasks Starting expiration check...
+INFO 2026-08-05 07:00:23,644 tasks No license to update for now.
+INFO 2026-08-05 07:00:23,644 api licenses.tasks.status_update_task: 96cd33af-aaad-48e8-96f6-e5cdaf0ab0d2 executed in 0.002s
+INFO 2026-08-05 08:00:13,854 consumer Enqueueing periodic task licenses.tasks.status_update_task: 291de155-420b-4714-9814-44e8d00b8dac.
+INFO 2026-08-05 08:00:21,495 api Executing licenses.tasks.status_update_task: 291de155-420b-4714-9814-44e8d00b8dac
+INFO 2026-08-05 08:00:21,495 tasks Starting expiration check...
+INFO 2026-08-05 08:00:21,497 tasks No license to update for now.
+INFO 2026-08-05 08:00:21,497 api licenses.tasks.status_update_task: 291de155-420b-4714-9814-44e8d00b8dac executed in 0.002s
+INFO 2026-08-05 09:00:13,854 consumer Enqueueing periodic task licenses.tasks.status_update_task: 5e178dc4-4834-482a-b9a3-8aacb3f56101.
+INFO 2026-08-05 09:00:19,047 api Executing licenses.tasks.status_update_task: 5e178dc4-4834-482a-b9a3-8aacb3f56101
+INFO 2026-08-05 09:00:19,047 tasks Starting expiration check...
+INFO 2026-08-05 09:00:19,049 tasks No license to update for now.
+INFO 2026-08-05 09:00:19,049 api licenses.tasks.status_update_task: 5e178dc4-4834-482a-b9a3-8aacb3f56101 executed in 0.003s
+INFO 2026-08-05 10:00:13,854 consumer Enqueueing periodic task licenses.tasks.status_update_task: ba874cdf-df6c-4e4e-aa24-b8e28b271d37.
+INFO 2026-08-05 10:00:16,206 api Executing licenses.tasks.status_update_task: ba874cdf-df6c-4e4e-aa24-b8e28b271d37
+INFO 2026-08-05 10:00:16,206 tasks Starting expiration check...
+INFO 2026-08-05 10:00:16,209 tasks No license to update for now.
+INFO 2026-08-05 10:00:16,209 api licenses.tasks.status_update_task: ba874cdf-df6c-4e4e-aa24-b8e28b271d37 executed in 0.003s
+INFO 2026-08-05 11:00:13,855 consumer Enqueueing periodic task licenses.tasks.status_update_task: 0aebf799-afbe-48c3-af34-7f7def65eaed.
+INFO 2026-08-05 11:00:23,330 api Executing licenses.tasks.status_update_task: 0aebf799-afbe-48c3-af34-7f7def65eaed
+INFO 2026-08-05 11:00:23,330 tasks Starting expiration check...
+INFO 2026-08-05 11:00:23,333 tasks No license to update for now.
+INFO 2026-08-05 11:00:23,333 api licenses.tasks.status_update_task: 0aebf799-afbe-48c3-af34-7f7def65eaed executed in 0.003s
+INFO 2026-08-05 12:00:13,855 consumer Enqueueing periodic task licenses.tasks.status_update_task: d5425837-1a55-4ddf-acf8-7cfd030ea9c8.
+INFO 2026-08-05 12:00:20,526 api Executing licenses.tasks.status_update_task: d5425837-1a55-4ddf-acf8-7cfd030ea9c8
+INFO 2026-08-05 12:00:20,526 tasks Starting expiration check...
+INFO 2026-08-05 12:00:20,529 tasks No license to update for now.
+INFO 2026-08-05 12:00:20,529 api licenses.tasks.status_update_task: d5425837-1a55-4ddf-acf8-7cfd030ea9c8 executed in 0.003s
+INFO 2026-08-05 13:00:13,855 consumer Enqueueing periodic task licenses.tasks.status_update_task: 4c4159f8-021e-4cfb-ab8d-3b6a295df3f9.
+INFO 2026-08-05 13:00:17,868 api Executing licenses.tasks.status_update_task: 4c4159f8-021e-4cfb-ab8d-3b6a295df3f9
+INFO 2026-08-05 13:00:17,868 tasks Starting expiration check...
+INFO 2026-08-05 13:00:17,871 tasks No license to update for now.
+INFO 2026-08-05 13:00:17,871 api licenses.tasks.status_update_task: 4c4159f8-021e-4cfb-ab8d-3b6a295df3f9 executed in 0.003s
+INFO 2026-08-05 14:00:13,854 consumer Enqueueing periodic task licenses.tasks.status_update_task: 41d2f553-5a40-4342-a321-fba74f0e04cd.
+INFO 2026-08-05 14:00:15,209 api Executing licenses.tasks.status_update_task: 41d2f553-5a40-4342-a321-fba74f0e04cd
+INFO 2026-08-05 14:00:15,209 tasks Starting expiration check...
+INFO 2026-08-05 14:00:15,212 tasks No license to update for now.
+INFO 2026-08-05 14:00:15,212 api licenses.tasks.status_update_task: 41d2f553-5a40-4342-a321-fba74f0e04cd executed in 0.003s
+INFO 2026-08-05 15:00:13,855 consumer Enqueueing periodic task licenses.tasks.status_update_task: a20a1aef-534d-4721-9626-145c0d506402.
+INFO 2026-08-05 15:00:22,434 api Executing licenses.tasks.status_update_task: a20a1aef-534d-4721-9626-145c0d506402
+INFO 2026-08-05 15:00:22,434 tasks Starting expiration check...
+INFO 2026-08-05 15:00:22,436 tasks No license to update for now.
+INFO 2026-08-05 15:00:22,436 api licenses.tasks.status_update_task: a20a1aef-534d-4721-9626-145c0d506402 executed in 0.003s
+ERROR 2026-08-05 15:40:19,746 user_wsgi_wrapper /home/denchick22/.ve52/lib/python3.13/site-packages/django/views/generic/list.py:91: UnorderedObjectListWarning: Pagination may yield inconsistent results with an unordered object_list: <class 'customers.models.Customer'> QuerySet.
+ERROR 2026-08-05 15:40:19,752 user_wsgi_wrapper   return self.paginator_class(
+INFO 2026-08-05 16:00:13,859 consumer Enqueueing periodic task licenses.tasks.status_update_task: fa02fb2a-2f89-4368-b694-24205b77b5a4.
+INFO 2026-08-05 16:00:19,801 api Executing licenses.tasks.status_update_task: fa02fb2a-2f89-4368-b694-24205b77b5a4
+INFO 2026-08-05 16:00:19,801 tasks Starting expiration check...
+INFO 2026-08-05 16:00:19,804 tasks No license to update for now.
+INFO 2026-08-05 16:00:19,804 api licenses.tasks.status_update_task: fa02fb2a-2f89-4368-b694-24205b77b5a4 executed in 0.004s
+INFO 2026-08-05 17:00:13,854 consumer Enqueueing periodic task licenses.tasks.status_update_task: 256395cf-2b57-4f13-b330-0ff4ca67fa97.
+INFO 2026-08-05 17:00:17,022 api Executing licenses.tasks.status_update_task: 256395cf-2b57-4f13-b330-0ff4ca67fa97
+INFO 2026-08-05 17:00:17,023 tasks Starting expiration check...
+INFO 2026-08-05 17:00:17,025 tasks No license to update for now.
+INFO 2026-08-05 17:00:17,025 api licenses.tasks.status_update_task: 256395cf-2b57-4f13-b330-0ff4ca67fa97 executed in 0.002s
+ERROR 2026-08-05 17:39:24,811 log Internal Server Error: /licenses/license/36/
+Traceback (most recent call last):
+  File "/home/denchick22/.ve52/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/denchick22/.ve52/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/denchick22/.ve52/lib/python3.13/site-packages/django/views/generic/base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/denchick22/.ve52/lib/python3.13/site-packages/django/contrib/auth/mixins.py", line 73, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/denchick22/.ve52/lib/python3.13/site-packages/django/views/generic/base.py", line 144, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/denchick22/django_projects/crm_project/licenses/views.py", line 46, in post
+    self.object.update_status_renew()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'License' object has no attribute 'update_status_renew'
+INFO 2026-08-05 17:40:04,698 views License (Test Customer, HelpSoft Pro Monthly) was renewed!
+INFO 2026-08-05 17:44:43,736 views License (Test Customer, Business CRM Monthly) was renewed!
+INFO 2026-08-05 17:47:11,996 views License (Test Customer, Business CRM Monthly) was renewed!
+ERROR 2026-08-05 17:47:59,597 log Internal Server Error: /licenses/license/30/
+Traceback (most recent call last):
+  File "/home/denchick22/.ve52/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/denchick22/.ve52/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/denchick22/.ve52/lib/python3.13/site-packages/django/views/generic/base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/denchick22/.ve52/lib/python3.13/site-packages/django/contrib/auth/mixins.py", line 73, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/denchick22/.ve52/lib/python3.13/site-packages/django/views/generic/base.py", line 144, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/home/denchick22/django_projects/crm_project/licenses/views.py", line 47, in post
+    logger.info(f"License (ID:{self.object.customer.full_name}, Name: {self.object.customer}, Product: {self.object.product}) was renewed!")
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'License' object has no attribute 'customer__full_name'
+INFO 2026-08-05 17:48:22,597 views License (ID:Test Customer, Name: Test Customer, Product: Business CRM Monthly) was renewed!
+INFO 2026-08-05 17:49:35,577 views License (ID:30, Name: Test Customer, Product: Business CRM Monthly) was renewed!
+INFO 2026-08-05 17:50:24,286 views License (ID:30, Name: Test Customer, Product: Business CRM Monthly) was renewed!

@@ -1,4 +1,6 @@
 # from django.shortcuts import render
+import logging
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -6,6 +8,8 @@ from django.db.models import Q
 from accounts.mixins import BlockSalesMixin, BlockSupportMixin
 from licenses.models import License
 from licenses.forms import LicenseCreateForm, LicenseUpdateForm
+
+logger = logging.getLogger(__name__)
 
 class LicenseListView(LoginRequiredMixin, ListView):
     model = License
@@ -32,6 +36,18 @@ class LicenseListView(LoginRequiredMixin, ListView):
 
 class LicenseDetailView(LoginRequiredMixin, DetailView):
     model = License
+
+    def post(self, request, *args, **kwargs):
+        # 1. Get the object standard DetailView style
+        self.object = self.get_object()
+
+        # 2. Check if the specific button was clicked
+        if 'renew_button' in request.POST:
+            self.object.renew()
+            logger.info(f"License (ID:{self.object.pk}, Name: {self.object.customer}, Product: {self.object.product}) was renewed!")
+
+            return redirect(reverse_lazy("licenses:license_detail", kwargs={"pk": self.object.pk}))
+
 
 class LicenseCreateView(LoginRequiredMixin, BlockSalesMixin, BlockSupportMixin, CreateView):
     model = License
