@@ -67,11 +67,13 @@
               <tr>
                 <th scope="row" class="ps-4 text-muted fw-medium">License Renew</th>
                 <td class="pe-4">
-                <form method="post">
+                  <form method="post" class="d-inline">
                     {% csrf_token %}
-                    <button class="btn btn-success" type="submit" name="renew_button" value="renew">Renew Now</button>
+                    <button class="btn btn-success btn-sm d-inline-flex align-items-center gap-2 shadow-sm" type="submit" name="renew_button" value="renew">
+                      <i class="fa fa-refresh"></i> Renew Now
+                    </button>
+                  </form>
                 </td>
-                </form>
               </tr>
               {% endif %}
             </tbody>

@@ -196,3 +196,9 @@ AttributeError: 'License' object has no attribute 'customer__full_name'
 INFO 2026-08-05 17:48:22,597 views License (ID:Test Customer, Name: Test Customer, Product: Business CRM Monthly) was renewed!
 INFO 2026-08-05 17:49:35,577 views License (ID:30, Name: Test Customer, Product: Business CRM Monthly) was renewed!
 INFO 2026-08-05 17:50:24,286 views License (ID:30, Name: Test Customer, Product: Business CRM Monthly) was renewed!
+INFO 2026-08-05 18:00:13,854 consumer Enqueueing periodic task licenses.tasks.status_update_task: 1cb1e3ee-ab21-4b31-bcbb-ced6005c48c6.
+INFO 2026-08-05 18:00:14,243 api Executing licenses.tasks.status_update_task: 1cb1e3ee-ab21-4b31-bcbb-ced6005c48c6
+INFO 2026-08-05 18:00:14,243 tasks Starting expiration check...
+INFO 2026-08-05 18:00:14,247 tasks No license to update for now.
+INFO 2026-08-05 18:00:14,247 api licenses.tasks.status_update_task: 1cb1e3ee-ab21-4b31-bcbb-ced6005c48c6 executed in 0.003s
+                                                                                                                                                                                                                                                                                                                                                            
