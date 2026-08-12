@@ -47,25 +47,11 @@ class License(models.Model):
         if not self.license_key:
             self.license_key = self.generate_unique_license_key()
 
-        if self.expiration_date is None and self.product.billing_type != Product.LIFETIME and self.status != self.SUSPENDED:
-            self.expiration_date = self.expiration()
+        self.handle_expiration()
 
-        if self.suspended_at is None and self.status == self.SUSPENDED and self.product.billing_type != Product.LIFETIME:
-            self.suspended_at = timezone.now()
-            self.handle_suspension_duration()
-            self.expiration_date = None
-        elif self.suspended_at and self.status == self.ACTIVE:
-            if self.product.billing_type != Product.LIFETIME:
-                self.handle_suspension_duration()
-            self.suspended_at = None
-        elif self.suspended_at is None and self.status == self.SUSPENDED and self.product.billing_type == Product.LIFETIME:
-            self.suspended_at = timezone.now()
-            self.expiration_date = None
-            self.remaining_duration = None
+        self.handle_suspension()
 
-        if self.status == self.INACTIVE:
-            self.suspended_at = None
-            self.remaining_duration = None
+        self.handle_inactive()
 
         super().save(*args, **kwargs)
 
@@ -85,6 +71,29 @@ class License(models.Model):
             new_key = generate_license_key()
             if not License.objects.filter(license_key=new_key).exists():
                 return new_key
+
+    def handle_suspension(self):
+        if self.suspended_at is None and self.status == self.SUSPENDED and self.product.billing_type != Product.LIFETIME:
+            self.suspended_at = timezone.now()
+            self.handle_suspension_duration()
+            self.expiration_date = None
+        elif self.suspended_at and self.status == self.ACTIVE:
+            if self.product.billing_type != Product.LIFETIME:
+                self.handle_suspension_duration()
+            self.suspended_at = None
+        elif self.suspended_at is None and self.status == self.SUSPENDED and self.product.billing_type == Product.LIFETIME:
+            self.suspended_at = timezone.now()
+            self.expiration_date = None
+            self.remaining_duration = None
+
+    def handle_inactive(self):
+        if self.status == self.INACTIVE:
+            self.suspended_at = None
+            self.remaining_duration = Non
+
+    def handle_expiration(self):
+        if self.expiration_date is None and self.product.billing_type != Product.LIFETIME and self.status != self.SUSPENDED:
+            self.expiration_date = self.expiration()
 
     def expiration(self):
         if self.product.billing_type == Product.LIFETIME:

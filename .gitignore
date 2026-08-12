@@ -4,3 +4,7 @@ __pycache__/
 .ve52/
 .env
 *.log
+huey.db
+huey.db-journal
+huey.db-wal
+huey.db-shm
