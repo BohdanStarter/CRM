@@ -44,8 +44,7 @@ class License(models.Model):
 
 
     def save(self, *args, **kwargs):
-        if not self.license_key:
-            self.license_key = self.generate_unique_license_key()
+        self.handle_license_key_creation()
 
         self.handle_expiration()
 
@@ -72,6 +71,10 @@ class License(models.Model):
             if not License.objects.filter(license_key=new_key).exists():
                 return new_key
 
+    def handle_license_key_creation(self):
+        if not self.license_key:
+            self.license_key = self.generate_unique_license_key()
+
     def handle_suspension(self):
         if self.suspended_at is None and self.status == self.SUSPENDED and self.product.billing_type != Product.LIFETIME:
             self.suspended_at = timezone.now()
@@ -89,7 +92,7 @@ class License(models.Model):
     def handle_inactive(self):
         if self.status == self.INACTIVE:
             self.suspended_at = None
-            self.remaining_duration = Non
+            self.remaining_duration = None
 
     def handle_expiration(self):
         if self.expiration_date is None and self.product.billing_type != Product.LIFETIME and self.status != self.SUSPENDED:

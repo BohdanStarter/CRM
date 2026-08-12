@@ -39,15 +39,11 @@ class LicenseDetailView(LoginRequiredMixin, DetailView):
     model = License
 
     def post(self, request, *args, **kwargs):
-        # 1. Get the object standard DetailView style
         self.license = self.get_object()
 
-        # 2. Check if the specific button was clicked
         if 'renew_button' in request.POST:
             self.license.renew()
             logger.info(f"License (ID:{self.license.pk}, Name: {self.license.customer}, Product: {self.license.product}) was renewed!")
-
-
             messages.success(request, "The license has been successfully renewed.")
             return redirect('licenses:license_detail', pk=self.license.pk)
 
