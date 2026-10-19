@@ -36,6 +36,13 @@
                 <i class="fa fa-key me-1.5 fs-7"></i> Licenses
               </a>
             </li>
+
+            {% url 'activity:all' as activity_url %}
+            <li class="nav-item">
+              <a class="nav-link px-3 {% if request.path|slice:":10" == "/activity/" or request.path == activity_url %}active{% endif %}" href="{{ activity_url }}">
+                <i class="fa fa-key me-1.5 fs-7"></i> Activities
+              </a>
+            </li>
         </ul>
         <ul class="navbar-nav align-items-lg-center">
           {% if user.is_authenticated %}

@@ -7,7 +7,7 @@ class LicenseAdmin(admin.ModelAdmin):
     list_display = ["customer__full_name", "product__name", "license_key", "status", "expiration_date"]
     list_filter = ["status", "product__name", "customer__full_name", "expiration_date"]
     search_fields = ["customer__full_name", "product__name", "license_key"]
-    exclude = ["expiration_date"]
+    readonly_fields = ["suspended_at", "expiration_date"]
 
 
 admin.site.register(License, LicenseAdmin)
